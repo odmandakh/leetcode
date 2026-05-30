@@ -1,11 +1,5 @@
 #include <algorithm>
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <vector>
-#include "../runner.h"
 
 class Solution {
     static const int MAXN = 50002;
@@ -74,58 +68,3 @@ public:
     }
 };
 
-// ─── Auto test runner ─────────────────────────────────────────────────────────
-// Reads all N.in / N.out pairs from testDir and runs them automatically.
-
-inline void runTests(const std::string& testDir) {
-    namespace fs = std::filesystem;
-
-    // Collect all .in files, sorted by name (1.in, 2.in, ...)
-    std::vector<fs::path> inFiles;
-    for (auto& entry : fs::directory_iterator(testDir)) {
-        if (entry.path().extension() == ".in")
-            inFiles.push_back(entry.path());
-    }
-    std::sort(inFiles.begin(), inFiles.end());
-
-    int passed = 0;
-    int total  = static_cast<int>(inFiles.size());
-
-    std::cout << "Problem 3161 · Block Placement Queries\n";
-    std::cout << std::string(45, '-') << "\n";
-
-    for (auto& inPath : inFiles) {
-        // ── read input ────────────────────────────────────────────────────
-        std::ifstream fin(inPath);
-        std::vector<std::vector<int>> queries;
-        std::string line;
-        while (std::getline(fin, line)) {
-            if (line.empty() || line[0] == '#') continue;
-            std::istringstream iss(line);
-            std::vector<int> q;
-            int v;
-            while (iss >> v) q.push_back(v);
-            if (!q.empty()) queries.push_back(q);
-        }
-
-        // ── read expected output ──────────────────────────────────────────
-        fs::path outPath = inPath;
-        outPath.replace_extension(".out");
-        std::ifstream fout(outPath);
-        std::vector<bool> expected;
-        std::string token;
-        while (fout >> token) expected.push_back(token == "true");
-
-        // ── run solution ──────────────────────────────────────────────────
-        Solution sol;
-        auto actual = sol.getResults(queries);
-
-        bool pass = (actual == expected);
-        if (pass) ++passed;
-
-        reportResult("Case " + inPath.stem().string(), actual, expected);
-    }
-
-    std::cout << std::string(45, '-') << "\n";
-    std::cout << "Result: " << passed << "/" << total << " passed\n\n";
-}
