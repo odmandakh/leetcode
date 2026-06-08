@@ -76,6 +76,23 @@ namespace Parse {
         std::string t; while (in >> t) v.push_back(t);
         return v;
     }
+
+    // Bracket/comma format: [1,2,3] or [-3,4,3,2] → vector<int>
+    inline std::vector<int> intVecBracketed(std::istream& in) {
+        std::vector<int> v;
+        std::string line;
+        while (std::getline(in, line)) {
+            if (line.empty()) continue;
+            // strip [ and ]
+            for (char& c : line) if (c == '[' || c == ']') c = ' ';
+            // replace commas with spaces
+            for (char& c : line) if (c == ',') c = ' ';
+            std::istringstream iss(line);
+            int x; while (iss >> x) v.push_back(x);
+            if (!v.empty()) break; // read only first non-empty line
+        }
+        return v;
+    }
 }
 
 // ─── Generic test runner ──────────────────────────────────────────────────────
