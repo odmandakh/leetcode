@@ -7,4 +7,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
 
 add_executable(LeetCode main.cpp
-        problems/2161.cpp)
+        problems/2161.cpp
+        problems/3689.cpp)
