@@ -1,4 +1,5 @@
 #pragma once
+#include <cctype>
 #include <chrono>
 #include <filesystem>
 #include <fstream>
@@ -124,6 +125,46 @@ inline std::vector<int> intVecBracketed(std::istream& in) {
     if (!v.empty()) break;  // read only first non-empty line
   }
   return v;
+}
+
+// Nested bracket format on one line: [[0,1,1],[1,0,1]] → vector<vector<int>>
+inline std::vector<std::vector<int>> int2DVecBracketed(std::istream& in) {
+  std::vector<std::vector<int>> res;
+  std::string content, line;
+  while (std::getline(in, line)) {
+    if (!line.empty()) {
+      content = line;
+      break;
+    }
+  }
+
+  std::vector<int> row;
+  std::string numBuf;
+  int depth = 0;
+  auto flushNum = [&]() {
+    if (!numBuf.empty()) {
+      row.push_back(std::stoi(numBuf));
+      numBuf.clear();
+    }
+  };
+
+  for (char c : content) {
+    if (c == '[') {
+      ++depth;
+      if (depth == 2) row.clear();
+    } else if (c == ']') {
+      if (depth == 2) {
+        flushNum();
+        res.push_back(row);
+      }
+      --depth;
+    } else if (c == ',') {
+      flushNum();
+    } else if (!std::isspace(static_cast<unsigned char>(c))) {
+      numBuf.push_back(c);
+    }
+  }
+  return res;
 }
 }  // namespace Parse
 
