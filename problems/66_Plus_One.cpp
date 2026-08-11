@@ -1,3 +1,4 @@
+#include "runner.h"
 #include <vector>
 
 class Solution {
@@ -16,4 +17,10 @@ public:
     }
 };
 
-
+inline void run() {
+  runTests(std::string(PROJECT_ROOT) + "/tests/66", "Problem 66 · Plus One",
+           Parse::intVec,                               // ← pick parser
+           Parse::intVec,                               // ← pick parser
+           [](auto d) { return Solution().plusOne(d); } // ← one line solve
+  );
+}

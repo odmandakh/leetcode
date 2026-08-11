@@ -1,4 +1,5 @@
 #pragma once
+#include <chrono>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -24,16 +25,39 @@ inline void printVec(const std::vector<T>& v) {
 // ─── Generic result reporter ──────────────────────────────────────────────────
 
 template<typename T>
+inline void printElem(const T& v) {
+    if constexpr (std::is_same_v<T, bool>) std::cout << (v ? "true" : "false");
+    else std::cout << v;
+}
+
+template<typename T>
 inline void reportResult(
     const std::string& label,
     const std::vector<T>& actual,
-    const std::vector<T>& expected
+    const std::vector<T>& expected,
+    double elapsedMs
 ) {
     bool pass = (actual == expected);
-    std::cout << "[" << (pass ? "PASS" : "FAIL") << "] " << label << "\n";
+    std::cout << "[" << (pass ? "PASS" : "FAIL") << "] " << label
+               << " (" << elapsedMs << " ms)\n";
     std::cout << "  actual   = "; printVec(actual);   std::cout << "\n";
     if (!pass) {
         std::cout << "  expected = "; printVec(expected); std::cout << "\n";
+        if (actual.size() != expected.size()) {
+            std::cout << "  size mismatch: actual.size()=" << actual.size()
+                       << " expected.size()=" << expected.size() << "\n";
+        } else {
+            for (size_t i = 0; i < actual.size(); ++i) {
+                if (!(actual[i] == expected[i])) {
+                    std::cout << "  first mismatch at index " << i << ": actual=";
+                    printElem(actual[i]);
+                    std::cout << " expected=";
+                    printElem(expected[i]);
+                    std::cout << "\n";
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -116,31 +140,39 @@ inline void runTests(
             inFiles.push_back(entry.path());
     std::sort(inFiles.begin(), inFiles.end());
 
-    const int total = static_cast<int>(inFiles.size());
-    int passed = 0;
+    int passed = 0, failed = 0, skipped = 0;
+    double totalMs = 0.0;
 
     std::cout << title << "\n" << std::string(title.size(), '-') << "\n";
 
     for (auto& inPath : inFiles) {
-        std::ifstream fin(inPath);
-        auto input = parseInput(fin);
-
         fs::path outPath = inPath;
         outPath.replace_extension(".out");
         std::ifstream fout(outPath);
+        if (!fout.is_open()) {
+            std::cout << "[SKIP] Case " << inPath.stem().string()
+                       << " -- missing " << outPath.string() << "\n";
+            ++skipped;
+            continue;
+        }
+
+        std::ifstream fin(inPath);
+        auto input = parseInput(fin);
         auto expected = parseExpected(fout);
 
+        auto start = std::chrono::steady_clock::now();
         auto actual = solve(input);
+        auto end = std::chrono::steady_clock::now();
+        double elapsedMs = std::chrono::duration<double, std::milli>(end - start).count();
+        totalMs += elapsedMs;
 
         bool pass = (actual == expected);
-        if (pass) ++passed;
-        reportResult("Case " + inPath.stem().string(), actual, expected);
+        if (pass) ++passed; else ++failed;
+        reportResult("Case " + inPath.stem().string(), actual, expected, elapsedMs);
     }
 
     std::cout << std::string(title.size(), '-') << "\n";
-    std::cout << "Result: " << passed << "/" << total << " passed\n\n";
+    std::cout << "Result: " << passed << "/" << (passed + failed) << " passed";
+    if (skipped > 0) std::cout << " (" << skipped << " skipped)";
+    std::cout << " -- total " << totalMs << " ms\n\n";
 }
-
-
-
-

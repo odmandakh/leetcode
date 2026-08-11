@@ -1,3 +1,4 @@
+#include "runner.h"
 #include <algorithm>
 #include <vector>
 
@@ -68,3 +69,11 @@ public:
     }
 };
 
+inline void run() {
+  runTests(std::string(PROJECT_ROOT) + "/tests/3161",
+           "Problem 3161 · Block Placement Queries",
+           Parse::int2DVec,                                // input parser
+           Parse::boolVec,                                 // output parser
+           [](auto q) { return Solution().getResults(q); } // solve
+  );
+}
