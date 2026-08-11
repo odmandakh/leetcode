@@ -10,17 +10,17 @@ public:
 
 inline void run() {
   runTests(
-      std::string(PROJECT_ROOT) + "/tests/3348",
+      string(PROJECT_ROOT) + "/tests/3348",
       "Smallest Divisible Digit Product II",
-      [](std::istream &in) -> std::pair<std::string, long long> {
-        std::string num;
+      [](istream &in) -> pair<string, long long> {
+        string num;
         long long t;
         in >> num >> t;
         return {num, t};
       },
       Parse::strVec,
       [](auto p) {
-        return std::vector<std::string>{
+        return vector<string>{
             Solution().smallestNumber(p.first, p.second)};
       });
 }

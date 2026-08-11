@@ -24,6 +24,8 @@ cat > "$file" <<EOF
 #include "runner.h"
 #include <vector>
 
+using namespace std;
+
 class Solution {
 public:
     // TODO: implement
@@ -31,7 +33,7 @@ public:
 
 inline void run() {
     runTests(
-        std::string(PROJECT_ROOT) + "/tests/${n}",
+        string(PROJECT_ROOT) + "/tests/${n}",
         "${title}",
         Parse::intVec,                              // TODO: pick parser
         Parse::intVec,                              // TODO: pick parser

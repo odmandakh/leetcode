@@ -25,10 +25,10 @@ public:
 
 inline void run() {
   runTests(
-      std::string(PROJECT_ROOT) + "/tests/2161",
+      string(PROJECT_ROOT) + "/tests/2161",
       "Problem 2161 · Partition Array According to Given Pivot",
       // parseInput: line 1 = [a,b,c,...], line 2 = pivot
-      [](std::istream &in) -> std::pair<std::vector<int>, int> {
+      [](istream &in) -> pair<vector<int>, int> {
         auto nums = Parse::intVecBracketed(in);
         int pivot = 0;
         in >> pivot;

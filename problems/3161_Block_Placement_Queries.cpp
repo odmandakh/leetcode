@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <vector>
 
+using namespace std;
+
 class Solution {
     static const int MAXN = 50002;
 
@@ -11,14 +13,14 @@ class Solution {
         int right_obs = -1;  // rightmost obstacle in this range (-1 = none)
     };
 
-    std::vector<Node> tree;
+    vector<Node> tree;
 
     Node merge(const Node& L, const Node& R) {
         Node res;
-        res.max_gap = std::max(L.max_gap, R.max_gap);
+        res.max_gap = max(L.max_gap, R.max_gap);
         // Gap bridging the two children
         if (L.right_obs != -1 && R.left_obs != -1)
-            res.max_gap = std::max(res.max_gap, R.left_obs - L.right_obs);
+            res.max_gap = max(res.max_gap, R.left_obs - L.right_obs);
         res.left_obs  = (L.left_obs  != -1) ? L.left_obs  : R.left_obs;
         res.right_obs = (R.right_obs != -1) ? R.right_obs : L.right_obs;
         return res;
@@ -43,12 +45,12 @@ class Solution {
     }
 
 public:
-    std::vector<bool> getResults(std::vector<std::vector<int>>& queries) {
+    vector<bool> getResults(vector<vector<int>>& queries) {
         tree.assign(4 * MAXN, Node{});
         // 0 is always an implicit left wall
         update(1, 0, MAXN - 1, 0);
 
-        std::vector<bool> results;
+        vector<bool> results;
 
         for (auto& q : queries) {
             if (q[0] == 1) {
@@ -61,7 +63,7 @@ public:
                 // Also check gap from rightmost obstacle to x (x acts as right wall)
                 int max_gap = res.max_gap;
                 if (res.right_obs != -1)
-                    max_gap = std::max(max_gap, x - res.right_obs);
+                    max_gap = max(max_gap, x - res.right_obs);
                 results.push_back(max_gap >= sz);
             }
         }
@@ -70,7 +72,7 @@ public:
 };
 
 inline void run() {
-  runTests(std::string(PROJECT_ROOT) + "/tests/3161",
+  runTests(string(PROJECT_ROOT) + "/tests/3161",
            "Problem 3161 · Block Placement Queries",
            Parse::int2DVec,                                // input parser
            Parse::boolVec,                                 // output parser
