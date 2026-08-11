@@ -3,6 +3,9 @@ project(LeetCode)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 # Makes PROJECT_ROOT available in code so test files resolve regardless of working dir
 add_compile_definitions(PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
