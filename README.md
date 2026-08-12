@@ -25,9 +25,26 @@ Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/
   ```
 - **Start a brand-new problem:**
   ```bash
-  scripts/new.sh <problem-number> "<Title>"   # e.g. scripts/new.sh 217 "Contains Duplicate"
+  scripts/new.sh <problem-number> "<Title>" [shape] [methodName]
+  # e.g. scripts/new.sh 217 "Contains Duplicate"                    (generic TODO stub)
+  # e.g. scripts/new.sh 2958 "Longest Subarray With K Frequency" vec-int-scalar maxSubarrayLength
   ```
-  This scaffolds `problems/<n>.cpp` (with `// TODO` stubs for the `Solution` body and the parser/solve wiring) and an empty `tests/<n>/` directory, then switches `main.cpp` to point at it. Add your `.in`/`.out` test cases to `tests/<n>/`, fill in the TODOs, and build.
+  This scaffolds `problems/<n>.cpp` and an empty `tests/<n>/` directory, then switches `main.cpp` to point at it.
+
+  If you pass a `shape` + `methodName`, the generated `run()` is **fully wired** — no "TODO: pick parser" guessing, no wrong-arity bugs. `scripts/new.sh` (no args) prints the current shape table; the shapes cover every signature this repo has needed so far:
+
+  | shape | `Solution` signature |
+  |---|---|
+  | `vec` | `vector<int> f(vector<int>&)` → `vector<int>` |
+  | `vec-scalar` | `int f(vector<int>&)` → `int` |
+  | `vec-int` | `vector<int> f(vector<int>&, int)` → `vector<int>` |
+  | `vec-int-scalar` | `int f(vector<int>&, int)` → `int` |
+  | `matrix` | `vector<int> f(vector<vector<int>>&)` → `vector<int>` |
+  | `str-scalar-str` | `string f(string, long long)` → `string` |
+
+  Omit `shape`/`methodName` for anything else (falls back to the generic TODO stub, same as before) — e.g. `problems/3161.cpp`'s query-array signature is bespoke enough it's still hand-wired.
+
+  **Test fixture convention:** one field per line — arrays bracketed (`[1,2,3]`), scalars plain (`2`). This matches copy-pasting LeetCode's own `Input: nums = [...], k = ...` / `Output: ...` text directly, split at the commas, no reformatting needed. (Arrays must be alone on their line — the bracketed parsers consume every number on the line they're given.)
 
 ## Workflow
 - Use `cpp-pro` for C++ implementation, debugging, and performance improvements.
