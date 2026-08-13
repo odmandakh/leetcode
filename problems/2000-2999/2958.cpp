@@ -32,7 +32,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/2958", "Length of Longest Subarray With at Most K Frequency",
+      string(PROJECT_ROOT) + "/tests/2000-2999/2958", "Length of Longest Subarray With at Most K Frequency",
       [](istream& in) -> pair<vector<int>, int> {
         auto nums = Parse::intVecBracketed(in);
         int k = 0;

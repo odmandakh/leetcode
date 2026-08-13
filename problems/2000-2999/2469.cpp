@@ -16,7 +16,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/2469", "Convert the Temperature",
+      string(PROJECT_ROOT) + "/tests/2000-2999/2469", "Convert the Temperature",
       [](istream& in) -> double {
         double celsius = 0;
         in >> celsius;

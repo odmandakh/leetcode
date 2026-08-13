@@ -16,7 +16,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/3945", "Digit Frequency Score",
+      string(PROJECT_ROOT) + "/tests/3000-3999/3945", "Digit Frequency Score",
       [](istream& in) -> int {
         int n = 0;
         in >> n;

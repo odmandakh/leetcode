@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Scaffold a new problem: creates problems/<n>.cpp + tests/<n>/, then switches to it.
+# Scaffold a new problem: creates problems/<bucket>/<n>.cpp + tests/<bucket>/<n>/, then switches to it.
 # Usage: scripts/new.sh <problem-number> ["<Title>"] [shape] [methodName]
 #
 # If [shape] and [methodName] are both given, generates a fully-wired run()
@@ -36,10 +36,15 @@ title="${2:-Problem $n}"
 shape="${3:-}"
 method="${4:-}"
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-file="$root/problems/${n}.cpp"
+
+# Problems are grouped into number-range subfolders, e.g. problems/2000-2999/2161.cpp
+bucket_start=$(( (n/1000)*1000 ))
+bucket_end=$((bucket_start+999))
+bucket="${bucket_start}-${bucket_end}"
+file="$root/problems/${bucket}/${n}.cpp"
 
 if [ -e "$file" ]; then
-    echo "problems/${n}.cpp already exists" >&2
+    echo "problems/${bucket}/${n}.cpp already exists" >&2
     exit 1
 fi
 
@@ -49,7 +54,7 @@ if [ -n "$shape" ] && [ -z "$method" ]; then
     exit 1
 fi
 
-mkdir -p "$root/tests/${n}"
+mkdir -p "$root/problems/${bucket}" "$root/tests/${bucket}/${n}"
 
 case "$shape" in
 "")
@@ -66,7 +71,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       Parse::intVec,                              // TODO: pick parser
       Parse::intVec,                              // TODO: pick parser
@@ -92,7 +97,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       Parse::intVecBracketed,  // input: [1,2,3,...]
       Parse::intVecBracketed,  // output: [1,2,3,...]
@@ -118,7 +123,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       Parse::intVecBracketed,  // input: [1,2,3,...]
       Parse::intVec,           // output: single int (as a 1-element vector)
@@ -144,7 +149,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       [](istream& in) -> pair<vector<int>, int> {
         auto nums = Parse::intVecBracketed(in);
@@ -175,7 +180,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       [](istream& in) -> pair<vector<int>, int> {
         auto nums = Parse::intVecBracketed(in);
@@ -206,7 +211,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       Parse::int2DVecBracketed,  // input: [[0,1,1],[1,0,1],...]
       Parse::intVecBracketed,    // output: [1,2,3,...]
@@ -232,7 +237,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       [](istream& in) -> pair<string, long long> {
         string s;
@@ -265,7 +270,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/${n}",
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
       "${title}",
       [](istream& in) -> tuple<string, string, vector<int>> {
         auto stripQuotes = [](string s) {
@@ -296,5 +301,5 @@ EOF
     ;;
 esac
 
-echo "Created problems/${n}.cpp and tests/${n}/"
+echo "Created problems/${bucket}/${n}.cpp and tests/${bucket}/${n}/"
 "$root/scripts/switch.sh" "$n"

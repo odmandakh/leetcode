@@ -11,7 +11,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/3348", "Smallest Divisible Digit Product II",
+      string(PROJECT_ROOT) + "/tests/3000-3999/3348", "Smallest Divisible Digit Product II",
       [](istream& in) -> pair<string, long long> {
         string num;
         long long t;

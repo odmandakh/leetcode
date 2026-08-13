@@ -20,7 +20,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/3668", "Restore Finishing Order",
+      string(PROJECT_ROOT) + "/tests/3000-3999/3668", "Restore Finishing Order",
       [](istream& in) -> pair<vector<int>, vector<int>> {
         auto order = Parse::intVecBracketed(in);
         auto friends = Parse::intVecBracketed(in);

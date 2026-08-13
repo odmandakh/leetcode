@@ -11,7 +11,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/2769", "Find the Maximum Achievable Number",
+      string(PROJECT_ROOT) + "/tests/2000-2999/2769", "Find the Maximum Achievable Number",
       [](istream& in) -> pair<int, int> {
         int num = 0, t = 0;
         in >> num >> t;

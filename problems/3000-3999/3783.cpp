@@ -19,7 +19,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/3783", "Mirror Distance of an Integer",
+      string(PROJECT_ROOT) + "/tests/3000-3999/3783", "Mirror Distance of an Integer",
       [](istream& in) -> int {
         int n = 0;
         in >> n;

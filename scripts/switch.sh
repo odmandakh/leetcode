@@ -11,13 +11,13 @@ fi
 n="$1"
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-match=$(find "$root/problems" -maxdepth 1 -name "${n}*.cpp" | sort | head -1)
+match=$(find "$root/problems" -name "${n}*.cpp" | sort | head -1)
 if [ -z "$match" ]; then
     echo "No problems/${n}*.cpp found" >&2
     exit 1
 fi
 
-rel="problems/$(basename "$match")"
+rel="${match#$root/}"
 
 cat > "$root/main.cpp" <<EOF
 // ─────────────────────────────────────────────────────────────────────────────

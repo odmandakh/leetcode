@@ -17,7 +17,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/3931", "Check Adjacent Digit Differences",
+      string(PROJECT_ROOT) + "/tests/3000-3999/3931", "Check Adjacent Digit Differences",
       [](istream& in) -> string {
         string s;
         in >> s;

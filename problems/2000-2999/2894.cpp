@@ -21,7 +21,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/2894", "Divisible and Non-divisible Sums Difference",
+      string(PROJECT_ROOT) + "/tests/2000-2999/2894", "Divisible and Non-divisible Sums Difference",
       [](istream& in) -> pair<int, int> {
         int n = 0, m = 0;
         in >> n >> m;

@@ -21,7 +21,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/tests/2011", "Final Value of Variable After Performing Operations",
+      string(PROJECT_ROOT) + "/tests/2000-2999/2011", "Final Value of Variable After Performing Operations",
       [](istream& in) -> vector<string> {
         string line;
         while (getline(in, line)) {

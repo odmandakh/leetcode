@@ -13,10 +13,12 @@ Build and run the currently active problem:
 cmake --build build
 ./build/LeetCode
 ```
-This runs every `.in`/`.out` case under the active problem's `tests/<n>/` directory and prints PASS/FAIL (with timing) per case.
+This runs every `.in`/`.out` case under the active problem's `tests/<bucket>/<n>/` directory and prints PASS/FAIL (with timing) per case.
 
 ## Switching Problems
 Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/<n>.cpp` owns its own `Solution` class *and* the `run()` call that wires it up to `runTests()` — so switching never touches `CMakeLists.txt` and can't mismatch a parser to the wrong problem.
+
+Problem files live in number-range subfolders — `problems/0-999/`, `problems/1000-1999/`, `problems/2000-2999/`, `problems/3000-3999/`, etc. — instead of one flat directory, to keep things browsable as the collection grows. `tests/` mirrors the exact same buckets (`tests/2000-2999/2161/` matches `problems/2000-2999/2161.cpp`). `scripts/new.sh`/`scripts/switch.sh` compute the right bucket automatically; you never need to pick one by hand.
 
 - **Switch to an already-solved problem:**
   ```bash
@@ -29,7 +31,7 @@ Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/
   # e.g. scripts/new.sh 217 "Contains Duplicate"                    (generic TODO stub)
   # e.g. scripts/new.sh 2958 "Longest Subarray With K Frequency" vec-int-scalar maxSubarrayLength
   ```
-  This scaffolds `problems/<n>.cpp` and an empty `tests/<n>/` directory, then switches `main.cpp` to point at it.
+  This scaffolds `problems/<bucket>/<n>.cpp` and an empty `tests/<bucket>/<n>/` directory, then switches `main.cpp` to point at it.
 
   If you pass a `shape` + `methodName`, the generated `run()` is **fully wired** — no "TODO: pick parser" guessing, no wrong-arity bugs. `scripts/new.sh` (no args) prints the current shape table; the shapes cover every signature this repo has needed so far:
 
@@ -43,7 +45,7 @@ Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/
   | `str-scalar-str` | `string f(string, long long)` → `string` |
   | `str-query` | `vector<int> f(string, string, vector<int>&)` → `vector<int>` |
 
-  Omit `shape`/`methodName` for anything else (falls back to the generic TODO stub, same as before) — e.g. `problems/3161.cpp`'s query-array signature is bespoke enough it's still hand-wired.
+  Omit `shape`/`methodName` for anything else (falls back to the generic TODO stub, same as before) — e.g. `problems/3000-3999/3161.cpp`'s query-array signature is bespoke enough it's still hand-wired.
 
   **Test fixture convention:** one field per line — arrays bracketed (`[1,2,3]`), scalars plain (`2`). This matches copy-pasting LeetCode's own `Input: nums = [...], k = ...` / `Output: ...` text directly, split at the commas, no reformatting needed. (Arrays must be alone on their line — the bracketed parsers consume every number on the line they're given.)
 
@@ -52,12 +54,12 @@ Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/
 - Use `leetcode-teacher` to explain patterns, invariants, and interview-ready reasoning.
 
 ## Daily Loop (30-60 min)
-1. Pick one problem, run `scripts/new.sh <n> "<Title>"`, and write edge cases as `.in`/`.out` files in `tests/<n>/` first.
+1. Pick one problem, run `scripts/new.sh <n> "<Title>"`, and write edge cases as `.in`/`.out` files in `tests/<bucket>/<n>/` first.
 2. Solve it in `problems/<n>.cpp` without help for 15-25 minutes.
 3. Ask `cpp-pro` for correctness/performance review.
 4. Ask `leetcode-teacher` for pattern recap and reuse rules.
 
-If you end up asking for the solution outright instead of solving it independently, mark the file honestly — add `// ASSISTED: <short reason>` right above `class Solution`. It's grep-able later: `grep -l ASSISTED problems/*.cpp` lists every problem that needs a solo re-attempt.
+If you end up asking for the solution outright instead of solving it independently, mark the file honestly — add `// ASSISTED: <short reason>` right above `class Solution`. It's grep-able later: `grep -rl ASSISTED problems/` lists every problem that needs a solo re-attempt.
 
 ## Practice Log Template
 Copy this block per problem:
