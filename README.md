@@ -41,6 +41,7 @@ Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/
   | `vec-int-scalar` | `int f(vector<int>&, int)` → `int` |
   | `matrix` | `vector<int> f(vector<vector<int>>&)` → `vector<int>` |
   | `str-scalar-str` | `string f(string, long long)` → `string` |
+  | `str-query` | `vector<int> f(string, string, vector<int>&)` → `vector<int>` |
 
   Omit `shape`/`methodName` for anything else (falls back to the generic TODO stub, same as before) — e.g. `problems/3161.cpp`'s query-array signature is bespoke enough it's still hand-wired.
 
@@ -55,6 +56,8 @@ Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/
 2. Solve it in `problems/<n>.cpp` without help for 15-25 minutes.
 3. Ask `cpp-pro` for correctness/performance review.
 4. Ask `leetcode-teacher` for pattern recap and reuse rules.
+
+If you end up asking for the solution outright instead of solving it independently, mark the file honestly — add `// ASSISTED: <short reason>` right above `class Solution`. It's grep-able later: `grep -l ASSISTED problems/*.cpp` lists every problem that needs a solo re-attempt.
 
 ## Practice Log Template
 Copy this block per problem:

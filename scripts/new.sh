@@ -16,6 +16,7 @@ Known shapes (scripts/new.sh <number> "<Title>" <shape> <methodName>):
   vec-int-scalar   int f(vector<int>&, int)              -> int
   matrix           vector<int> f(vector<vector<int>>&)  -> vector<int>
   str-scalar-str   string f(string, long long)           -> string
+  str-query        vector<int> f(string, string, vector<int>&) -> vector<int>
 
 Test fixture convention: one field per line, arrays bracketed (e.g. [1,2,3]),
 scalars plain (e.g. 2) -- matches copy-pasting LeetCode's own Example text.
@@ -241,6 +242,48 @@ inline void run() {
       },
       Parse::strVec,
       [](auto p) { return vector<string>{Solution().${method}(p.first, p.second)}; }
+  );
+}
+EOF
+    ;;
+
+str-query)
+    cat > "$file" <<EOF
+#include "runner.h"
+#include <string>
+#include <tuple>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+ public:
+  vector<int> ${method}(string s, string queryCharacters, vector<int>& queryIndices) {
+    // TODO: implement
+  }
+};
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/${n}",
+      "${title}",
+      [](istream& in) -> tuple<string, string, vector<int>> {
+        auto stripQuotes = [](string s) {
+          if (s.size() >= 2 && s.front() == '"' && s.back() == '"') s = s.substr(1, s.size() - 2);
+          return s;
+        };
+        string s, qc;
+        in >> s >> qc;
+        s = stripQuotes(s);
+        qc = stripQuotes(qc);
+        auto indices = Parse::intVecBracketed(in);
+        return {s, qc, indices};
+      },
+      Parse::intVecBracketed,  // output: [3,3,4]
+      [](auto t) {
+        auto [s, qc, idx] = t;
+        return Solution().${method}(s, qc, idx);
+      }
   );
 }
 EOF
