@@ -4,7 +4,7 @@
 //  wiring up runTests() with the right parsers — nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
-#include "problems/3000-3999/3658.cpp"
+#include "problems/3000-3999/3090.cpp"
 
 int main() {
     run();
