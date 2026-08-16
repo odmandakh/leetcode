@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Scaffold a new contest: creates contests/<Type>/<number>/Q1..Qn.cpp +
-# contests/<Type>/<number>/tests/Q1..Qn/, then switches to Q1.
-# Usage: scripts/new-contest.sh
-# Prompts interactively for contest type (Weekly/Biweekly), number, and
-# number of questions (blank defaults to 4).
+# Switch which contest question main.cpp includes and runs.
+# Usage: scripts/switch-contest.sh
+# Prompts interactively: contest type (menu) -> contest number (typed) ->
+# question (menu, built from what actually exists under contests/).
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -16,56 +15,38 @@ select type in "Weekly Contest" "Biweekly Contest"; do
     esac
 done
 
+typeDir="$root/contests/${type}"
+
 read -rp "Contest number: " number
 if ! [[ "$number" =~ ^[0-9]+$ ]]; then
     echo "Contest number must be a positive integer" >&2
     exit 1
 fi
 
-read -rp "Number of questions [4]: " numQ
-numQ="${numQ:-4}"
-if ! [[ "$numQ" =~ ^[0-9]+$ ]] || [ "$numQ" -eq 0 ]; then
-    echo "Number of questions must be a positive integer" >&2
+contestDir="$typeDir/$number"
+if [ ! -d "$contestDir" ]; then
+    echo "No contests/${type}/${number} found -- run scripts/new-contest.sh first" >&2
+    exit 1
+fi
+questions=()
+while IFS= read -r f; do
+    questions+=("$(basename "$f" .cpp)")
+done < <(find "$contestDir" -maxdepth 1 -name "Q*.cpp" | sort -V)
+
+if [ ${#questions[@]} -eq 0 ]; then
+    echo "No Qn.cpp files found under contests/${type}/${number}" >&2
     exit 1
 fi
 
-contest="${type}/${number}"
-contestDir="$root/contests/${contest}"
-if [ -e "$contestDir" ]; then
-    echo "contests/${contest} already exists" >&2
-    exit 1
-fi
-
-mkdir -p "$contestDir"
-
-for ((i = 1; i <= numQ; i++)); do
-    mkdir -p "$contestDir/tests/Q${i}"
-    cat >"$contestDir/Q${i}.cpp" <<EOF
-#include "runner.h"
-#include <vector>
-
-using namespace std;
-
-class Solution {
- public:
-  // TODO: implement
-};
-
-inline void run() {
-  runTests(
-      string(PROJECT_ROOT) + "/contests/${contest}/tests/Q${i}",
-      "${type} ${number} - Q${i}",
-      Parse::intVec,                              // TODO: pick parser
-      Parse::intVec,                              // TODO: pick parser
-      [](auto d) { return Solution().TODO(d); }   // TODO: solve
-  );
-}
-EOF
+PS3="Question: "
+select q in "${questions[@]}"; do
+    [ -n "${q:-}" ] && break
+    echo "Invalid selection, try again." >&2
 done
 
-echo "Created contests/${contest}/ with Q1..Q${numQ}.cpp and tests/Q1..Q${numQ}/"
+match="$contestDir/$q.cpp"
+rel="${match#$root/}"
 
-rel="contests/${contest}/Q1.cpp"
 cat > "$root/main.cpp" <<EOF
 // ─────────────────────────────────────────────────────────────────────────────
 //  To switch problems: run \`scripts/switch.sh <problem-number>\`, or for a

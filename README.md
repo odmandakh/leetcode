@@ -79,10 +79,11 @@ Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own
   Prompts interactively: pick `Weekly Contest` or `Biweekly Contest` from a numbered menu, enter the contest number, then enter the number of questions (blank defaults to 4). Scaffolds `contests/<Type>/<number>/Q1..Qn.cpp` (generic TODO stubs) and matching `tests/Q1..Qn/` directories, then switches `main.cpp` to `Q1`.
 - **Switch to a specific contest question:**
   ```bash
-  scripts/switch.sh "<Type>/<number>" <Qn>
-  # e.g. scripts/switch.sh "Weekly Contest/515" 3
+  scripts/switch-contest.sh
   ```
-  `scripts/switch.sh <problem-number>` still works exactly as before for numbered problems.
+  Interactive: pick contest type from a menu, type the contest number, then pick the question from a menu -- the type and question menus are built from what actually exists under `contests/`, so there's nothing to misspell.
+
+`scripts/switch.sh <problem-number>` is unchanged and only handles numbered problems; contest switching is a separate script (`scripts/switch-contest.sh`) since the two live in different trees with different identifiers.
 
 ## Workflow
 - Use `cpp-pro` for C++ implementation, debugging, and performance improvements.
