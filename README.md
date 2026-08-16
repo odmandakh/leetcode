@@ -42,12 +42,16 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
   | `vec-int` | `vector<int> f(vector<int>&, int)` → `vector<int>` |
   | `vec-int-scalar` | `int f(vector<int>&, int)` → `int` |
   | `matrix` | `vector<int> f(vector<vector<int>>&)` → `vector<int>` |
+  | `scalar-vec-scalar` | `int f(int, vector<int>&)` → `int` |
+  | `matrix-vec-scalar` | `int f(vector<vector<int>>&, vector<int>&)` → `int` |
   | `str-scalar-str` | `string f(string, long long)` → `string` |
+  | `str-scalar` | `int f(string)` → `int` (quotes stripped) |
+  | `two-str-scalar` | `int f(string, string)` → `int` (quotes stripped) |
   | `str-query` | `vector<int> f(string, string, vector<int>&)` → `vector<int>` |
 
   Omit `shape`/`methodName` for anything else (falls back to the generic TODO stub, same as before) — e.g. `problems/3000-3999/3161.cpp`'s query-array signature is bespoke enough it's still hand-wired.
 
-  **Test fixture convention:** one field per line — arrays bracketed (`[1,2,3]`), scalars plain (`2`). This matches copy-pasting LeetCode's own `Input: nums = [...], k = ...` / `Output: ...` text directly, split at the commas, no reformatting needed. (Arrays must be alone on their line — the bracketed parsers consume every number on the line they're given.)
+  **Test fixture convention:** one field per line — arrays bracketed (`[1,2,3]`), scalars plain (`2`), strings quoted (`"abc"` or `'abc'`). This matches copy-pasting LeetCode's own `Input: nums = [...], k = ...` / `Output: ...` text directly, split at the commas, no reformatting needed. (Arrays must be alone on their line — the bracketed parsers consume every number on the line they're given.) String shapes use `Parse::quotedString`/`Parse::stripQuotes` (in `runner.h`), which strip one layer of surrounding `"..."` or `'...'` quotes, so quoted LeetCode string inputs work with no manual stripping.
 
 ## Contests
 Live LeetCode contests (Weekly/Biweekly) present 4 problems at once, identified by contest type + number + question number rather than a LeetCode problem number — so they live in their own `contests/` tree instead of `problems/`/`tests/`, grouped first by type (`Weekly Contest`/`Biweekly Contest`), then by contest number:

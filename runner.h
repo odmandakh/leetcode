@@ -107,6 +107,21 @@ inline std::vector<std::string> strVec(std::istream& in) {
   return v;
 }
 
+// Strips one layer of surrounding "..." or '...' quotes, if present.
+inline std::string stripQuotes(std::string s) {
+  bool doubleQuoted = s.size() >= 2 && s.front() == '"' && s.back() == '"';
+  bool singleQuoted = s.size() >= 2 && s.front() == '\'' && s.back() == '\'';
+  if (doubleQuoted || singleQuoted) s = s.substr(1, s.size() - 2);
+  return s;
+}
+
+// Whitespace-delimited token, quotes stripped: "abc" or 'abc' → string
+inline std::string quotedString(std::istream& in) {
+  std::string s;
+  in >> s;
+  return stripQuotes(s);
+}
+
 // Bracket/comma format: [1,2,3] or [-3,4,3,2] → vector<int>
 inline std::vector<int> intVecBracketed(std::istream& in) {
   std::vector<int> v;
