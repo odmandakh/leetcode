@@ -46,7 +46,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/contests/Biweekly Contest 189/tests/Q3", "Biweekly Contest 189 - Q3",
+      string(PROJECT_ROOT) + "/contests/Biweekly Contest/189/tests/Q3", "Biweekly Contest 189 - Q3",
       [](istream& in) -> long long {
         long long k = 0;
         in >> k;

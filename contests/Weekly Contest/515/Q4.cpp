@@ -41,7 +41,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/contests/Weekly Contest 515/tests/Q4", "Weekly Contest 515 - Q4",
+      string(PROJECT_ROOT) + "/contests/Weekly Contest/515/tests/Q4", "Weekly Contest 515 - Q4",
       [](istream& in) -> tuple<int, int, vector<vector<int>>> {
         int n = 0, start = 0;
         in >> n >> start;

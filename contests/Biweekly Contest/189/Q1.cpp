@@ -18,7 +18,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/contests/Biweekly Contest 189/tests/Q1", "Biweekly Contest 189 - Q1",
+      string(PROJECT_ROOT) + "/contests/Biweekly Contest/189/tests/Q1", "Biweekly Contest 189 - Q1",
       [](istream& in) -> pair<int, vector<int>> {
         int n = 0;
         in >> n;

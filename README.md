@@ -1,4 +1,4 @@
-# leetcode
+# Leetcode
 LeetCode problem solving with a consistent learning loop.
 
 ## Build & Run
@@ -50,32 +50,37 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
   **Test fixture convention:** one field per line — arrays bracketed (`[1,2,3]`), scalars plain (`2`). This matches copy-pasting LeetCode's own `Input: nums = [...], k = ...` / `Output: ...` text directly, split at the commas, no reformatting needed. (Arrays must be alone on their line — the bracketed parsers consume every number on the line they're given.)
 
 ## Contests
-Live LeetCode contests (Weekly/Biweekly) present 4 problems at once, identified by contest name + question number rather than a LeetCode problem number — so they live in their own `contests/` tree instead of `problems/`/`tests/`:
+Live LeetCode contests (Weekly/Biweekly) present 4 problems at once, identified by contest type + number + question number rather than a LeetCode problem number — so they live in their own `contests/` tree instead of `problems/`/`tests/`, grouped first by type (`Weekly Contest`/`Biweekly Contest`), then by contest number:
 ```
 contests/
-  Biweekly Contest 189/
-    Q1.cpp
-    Q2.cpp
-    Q3.cpp
-    Q4.cpp
-    tests/
-      Q1/
-      Q2/
-      Q3/
-      Q4/
+  Weekly Contest/
+    515/
+      Q1.cpp
+      Q2.cpp
+      Q3.cpp
+      Q4.cpp
+      tests/
+        Q1/
+        Q2/
+        Q3/
+        Q4/
+    516/
+      ...
+  Biweekly Contest/
+    189/
+      ...
 ```
 Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own `Solution` class and `run()` wiring up `runTests()`.
 
 - **Start a new contest:**
   ```bash
-  scripts/new-contest.sh "<Contest Name>" [num_questions]
-  # e.g. scripts/new-contest.sh "Biweekly Contest 189"
+  scripts/new-contest.sh
   ```
-  Scaffolds `contests/<Contest Name>/Q1..Qn.cpp` (generic TODO stubs, `num_questions` defaults to 4) and matching `tests/Q1..Qn/` directories, then switches `main.cpp` to `Q1`.
+  Prompts interactively: pick `Weekly Contest` or `Biweekly Contest` from a numbered menu, enter the contest number, then enter the number of questions (blank defaults to 4). Scaffolds `contests/<Type>/<number>/Q1..Qn.cpp` (generic TODO stubs) and matching `tests/Q1..Qn/` directories, then switches `main.cpp` to `Q1`.
 - **Switch to a specific contest question:**
   ```bash
-  scripts/switch.sh "<Contest Name>" <Qn>
-  # e.g. scripts/switch.sh "Biweekly Contest 189" 3
+  scripts/switch.sh "<Type>/<number>" <Qn>
+  # e.g. scripts/switch.sh "Weekly Contest/515" 3
   ```
   `scripts/switch.sh <problem-number>` still works exactly as before for numbered problems.
 

@@ -26,7 +26,7 @@ class Solution {
 
 inline void run() {
   runTests(
-      string(PROJECT_ROOT) + "/contests/Weekly Contest 515/tests/Q1", "Weekly Contest 515 - Q1",
+      string(PROJECT_ROOT) + "/contests/Weekly Contest/515/tests/Q1", "Weekly Contest 515 - Q1",
       [](istream& in) -> pair<vector<vector<int>>, vector<int>> {
         auto drones = Parse::int2DVecBracketed(in);
         auto target = Parse::intVecBracketed(in);
