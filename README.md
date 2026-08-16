@@ -49,6 +49,36 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
 
   **Test fixture convention:** one field per line — arrays bracketed (`[1,2,3]`), scalars plain (`2`). This matches copy-pasting LeetCode's own `Input: nums = [...], k = ...` / `Output: ...` text directly, split at the commas, no reformatting needed. (Arrays must be alone on their line — the bracketed parsers consume every number on the line they're given.)
 
+## Contests
+Live LeetCode contests (Weekly/Biweekly) present 4 problems at once, identified by contest name + question number rather than a LeetCode problem number — so they live in their own `contests/` tree instead of `problems/`/`tests/`:
+```
+contests/
+  Biweekly Contest 189/
+    Q1.cpp
+    Q2.cpp
+    Q3.cpp
+    Q4.cpp
+    tests/
+      Q1/
+      Q2/
+      Q3/
+      Q4/
+```
+Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own `Solution` class and `run()` wiring up `runTests()`.
+
+- **Start a new contest:**
+  ```bash
+  scripts/new-contest.sh "<Contest Name>" [num_questions]
+  # e.g. scripts/new-contest.sh "Biweekly Contest 189"
+  ```
+  Scaffolds `contests/<Contest Name>/Q1..Qn.cpp` (generic TODO stubs, `num_questions` defaults to 4) and matching `tests/Q1..Qn/` directories, then switches `main.cpp` to `Q1`.
+- **Switch to a specific contest question:**
+  ```bash
+  scripts/switch.sh "<Contest Name>" <Qn>
+  # e.g. scripts/switch.sh "Biweekly Contest 189" 3
+  ```
+  `scripts/switch.sh <problem-number>` still works exactly as before for numbered problems.
+
 ## Workflow
 - Use `cpp-pro` for C++ implementation, debugging, and performance improvements.
 - Use `leetcode-teacher` to explain patterns, invariants, and interview-ready reasoning.
@@ -60,6 +90,8 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
 4. Ask `leetcode-teacher` for pattern recap and reuse rules.
 
 If you end up asking for the solution outright instead of solving it independently, mark the file honestly — add `// ASSISTED: <short reason>` right above `class Solution`. It's grep-able later: `grep -rl ASSISTED problems/` lists every problem that needs a solo re-attempt.
+
+**If an AI assistant writes or provides the solution logic itself** (not just reviewing/critiquing code you wrote), it must add the `// ASSISTED: <short reason>` tag above `class Solution` in the same turn it writes the code — don't wait to be asked. This applies to `problems/*.cpp` and `contests/*/Qn.cpp` alike.
 
 ## Practice Log Template
 Copy this block per problem:
