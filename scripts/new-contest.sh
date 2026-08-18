@@ -2,8 +2,10 @@
 # Scaffold a new contest: creates contests/<Type>/<number>/Q1..Qn.cpp +
 # contests/<Type>/<number>/tests/Q1..Qn/, then switches to Q1.
 # Usage: scripts/new-contest.sh
-# Prompts interactively for contest type (Weekly/Biweekly), number, and
-# number of questions (blank defaults to 4).
+# Prompts interactively for contest type (Weekly/Biweekly), number,
+# number of questions (blank defaults to 4), and number of test cases
+# per question (blank defaults to 3) -- creates that many empty
+# <k>.in/<k>.out placeholder pairs per question.
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -29,6 +31,13 @@ if ! [[ "$numQ" =~ ^[0-9]+$ ]] || [ "$numQ" -eq 0 ]; then
     exit 1
 fi
 
+read -rp "Number of test cases per question [3]: " numTests
+numTests="${numTests:-3}"
+if ! [[ "$numTests" =~ ^[0-9]+$ ]] || [ "$numTests" -eq 0 ]; then
+    echo "Number of test cases must be a positive integer" >&2
+    exit 1
+fi
+
 contest="${type}/${number}"
 contestDir="$root/contests/${contest}"
 if [ -e "$contestDir" ]; then
@@ -40,6 +49,10 @@ mkdir -p "$contestDir"
 
 for ((i = 1; i <= numQ; i++)); do
     mkdir -p "$contestDir/tests/Q${i}"
+    for ((t = 1; t <= numTests; t++)); do
+        : >"$contestDir/tests/Q${i}/${t}.in"
+        : >"$contestDir/tests/Q${i}/${t}.out"
+    done
     cat >"$contestDir/Q${i}.cpp" <<EOF
 #include "runner.h"
 #include <vector>
@@ -63,7 +76,7 @@ inline void run() {
 EOF
 done
 
-echo "Created contests/${contest}/ with Q1..Q${numQ}.cpp and tests/Q1..Q${numQ}/"
+echo "Created contests/${contest}/ with Q1..Q${numQ}.cpp and tests/Q1..Q${numQ}/ (${numTests} empty .in/.out pair(s) each)"
 
 rel="contests/${contest}/Q1.cpp"
 cat > "$root/main.cpp" <<EOF

@@ -1,11 +1,37 @@
 #!/usr/bin/env bash
 # Scaffold a new problem: creates problems/<bucket>/<n>.cpp + tests/<bucket>/<n>/, then switches to it.
-# Usage: scripts/new.sh <problem-number> ["<Title>"] [shape] [methodName]
+# Usage: scripts/new.sh <problem-number> ["<Title>"] [shape] [methodName] [--tests N]
 #
 # If [shape] and [methodName] are both given, generates a fully-wired run()
 # for that signature shape (no "TODO: pick parser" left). Otherwise falls back
 # to the generic stub, for one-off/exotic signatures (see problems/3161.cpp).
+#
+# --tests N (or -t N) creates N empty <k>.in/<k>.out placeholder pairs in the
+# tests/ directory, ready to paste LeetCode's examples into. Defaults to 3.
+# It's a flag rather than a positional arg so it doesn't collide with
+# [shape]/[methodName] and can appear anywhere on the command line.
 set -euo pipefail
+
+tests_count=3
+positional=()
+while [ $# -gt 0 ]; do
+    case "$1" in
+    --tests | -t)
+        tests_count="$2"
+        shift 2
+        ;;
+    *)
+        positional+=("$1")
+        shift
+        ;;
+    esac
+done
+set -- "${positional[@]+"${positional[@]}"}"
+
+if ! [[ "$tests_count" =~ ^[0-9]+$ ]] || [ "$tests_count" -eq 0 ]; then
+    echo "--tests must be a positive integer" >&2
+    exit 1
+fi
 
 print_shapes() {
     cat >&2 <<'TABLE'
@@ -30,7 +56,7 @@ TABLE
 }
 
 if [ $# -lt 1 ]; then
-    echo "Usage: $0 <problem-number> [\"<Title>\"] [shape] [methodName]" >&2
+    echo "Usage: $0 <problem-number> [\"<Title>\"] [shape] [methodName] [--tests N]" >&2
     print_shapes
     exit 1
 fi
@@ -59,6 +85,11 @@ if [ -n "$shape" ] && [ -z "$method" ]; then
 fi
 
 mkdir -p "$root/problems/${bucket}" "$root/tests/${bucket}/${n}"
+
+for ((i = 1; i <= tests_count; i++)); do
+    : >"$root/tests/${bucket}/${n}/${i}.in"
+    : >"$root/tests/${bucket}/${n}/${i}.out"
+done
 
 case "$shape" in
 "")
@@ -416,5 +447,5 @@ EOF
     ;;
 esac
 
-echo "Created problems/${bucket}/${n}.cpp and tests/${bucket}/${n}/"
+echo "Created problems/${bucket}/${n}.cpp and tests/${bucket}/${n}/ (${tests_count} empty .in/.out pair(s))"
 "$root/scripts/switch.sh" "$n"

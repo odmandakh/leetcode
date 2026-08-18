@@ -27,11 +27,12 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
   ```
 - **Start a brand-new problem:**
   ```bash
-  scripts/new.sh <problem-number> "<Title>" [shape] [methodName]
+  scripts/new.sh <problem-number> "<Title>" [shape] [methodName] [--tests N]
   # e.g. scripts/new.sh 217 "Contains Duplicate"                    (generic TODO stub)
   # e.g. scripts/new.sh 2958 "Longest Subarray With K Frequency" vec-int-scalar maxSubarrayLength
+  # e.g. scripts/new.sh 42 "Trapping Rain Water" vec-scalar trap --tests 5
   ```
-  This scaffolds `problems/<bucket>/<n>.cpp` and an empty `tests/<bucket>/<n>/` directory, then switches `main.cpp` to point at it.
+  This scaffolds `problems/<bucket>/<n>.cpp` and a `tests/<bucket>/<n>/` directory pre-populated with empty `1.in`/`1.out`, `2.in`/`2.out`, `3.in`/`3.out` placeholder pairs (ready to paste LeetCode's examples into), then switches `main.cpp` to point at it. `--tests N` (or `-t N`) changes how many pairs get created — it's a flag, not a positional arg, so it works whether or not you also pass `shape`/`methodName`, and can go anywhere on the command line. Defaults to 3 if omitted.
 
   If you pass a `shape` + `methodName`, the generated `run()` is **fully wired** — no "TODO: pick parser" guessing, no wrong-arity bugs. `scripts/new.sh` (no args) prints the current shape table; the shapes cover every signature this repo has needed so far:
 
@@ -80,7 +81,7 @@ Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own
   ```bash
   scripts/new-contest.sh
   ```
-  Prompts interactively: pick `Weekly Contest` or `Biweekly Contest` from a numbered menu, enter the contest number, then enter the number of questions (blank defaults to 4). Scaffolds `contests/<Type>/<number>/Q1..Qn.cpp` (generic TODO stubs) and matching `tests/Q1..Qn/` directories, then switches `main.cpp` to `Q1`.
+  Prompts interactively: pick `Weekly Contest` or `Biweekly Contest` from a numbered menu, enter the contest number, then enter the number of questions (blank defaults to 4), then enter the number of test cases per question (blank defaults to 3). Scaffolds `contests/<Type>/<number>/Q1..Qn.cpp` (generic TODO stubs) and matching `tests/Q1..Qn/` directories -- each pre-populated with that many empty `<k>.in`/`<k>.out` placeholder pairs -- then switches `main.cpp` to `Q1`.
 - **Switch to a specific contest question:**
   ```bash
   scripts/switch-contest.sh
@@ -94,7 +95,7 @@ Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own
 - Use `leetcode-teacher` to explain patterns, invariants, and interview-ready reasoning.
 
 ## Daily Loop (30-60 min)
-1. Pick one problem, run `scripts/new.sh <n> "<Title>"`, and write edge cases as `.in`/`.out` files in `tests/<bucket>/<n>/` first.
+1. Pick one problem, run `scripts/new.sh <n> "<Title>"`, and fill in the pre-created `.in`/`.out` placeholder pairs in `tests/<bucket>/<n>/` with LeetCode's examples (and your own edge cases) first.
 2. Solve it in `problems/<n>.cpp` without help for 15-25 minutes.
 3. Ask `cpp-pro` for correctness/performance review.
 4. Ask `leetcode-teacher` for pattern recap and reuse rules.
