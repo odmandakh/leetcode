@@ -94,7 +94,7 @@ Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own
 - Use `cpp-pro` for C++ implementation, debugging, and performance improvements.
 - Use `leetcode-teacher` to explain patterns, invariants, and interview-ready reasoning.
 
-Both are **required** for the Daily Loop below and are kept committed under `.agents/skills/` and `.claude/skills/` so they're available immediately after cloning. Everything else editor/agent-related is gitignored as personal, machine-specific setup, not repo content: `.zed/` (Zed debugger/task/editor config) and any *other* skill packages dropped into `.agents/skills/` or `.claude/skills/` beyond these two — reinstall those yourself from your own global `~/.agents/skills/`/`~/.claude/skills/` if you need them.
+Both are **required** for the Daily Loop below and are kept committed under `.claude/skills/` (what Claude Code / the `claude-acp` integration actually reads) so they're available immediately after cloning. `.agents/skills/` is Zed's *native*-agent skill format — unused by this repo's actual workflow, so it isn't tracked at all; don't recreate it unless you're switching off Claude Code. Everything else editor/agent-related is gitignored as personal, machine-specific setup, not repo content: `.zed/` (Zed debugger/task/editor config) and any *other* skill package dropped into `.claude/skills/` beyond these two — reinstall those yourself from your own global `~/.claude/skills/` if you need them.
 
 ## Daily Loop (30-60 min)
 1. Pick one problem, run `scripts/new.sh <n> "<Title>"`, and fill in the pre-created `.in`/`.out` placeholder pairs in `tests/<bucket>/<n>/` with LeetCode's examples (and your own edge cases) first.

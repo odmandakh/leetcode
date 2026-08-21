@@ -75,10 +75,10 @@ Testing/
 # AI agent skill packages -- only cpp-pro and leetcode-teacher are required
 # for this repo's documented workflow (see README's Workflow section); any
 # other/future skill dropped in here is personal, reinstallable tooling,
-# not repo content.
-.agents/skills/*
-!.agents/skills/cpp-pro/
-!.agents/skills/leetcode-teacher/
+# not repo content. (.agents/skills/ is Zed's native-agent format and isn't
+# used by this repo's Claude Code / claude-acp workflow, so it's not tracked
+# at all -- .claude/skills/ is the one that matters.)
+.agents/
 
 .claude/skills/*
 !.claude/skills/cpp-pro/
