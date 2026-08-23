@@ -5,7 +5,7 @@
 //  file defines its own run() wiring up runTests() -- nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
-#include "contests/Weekly Contest/516/Q4.cpp"
+#include "problems/1000-1999/1927.cpp"
 
 int main() {
     run();
