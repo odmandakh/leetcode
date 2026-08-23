@@ -9,29 +9,40 @@
 #include <vector>
 
 // ─── Generic print helper ─────────────────────────────────────────────────────
+// printVec/printElem recurse into each other so nested vectors (e.g.
+// vector<vector<int>>) print correctly, not just flat ones.
+
+template <typename T>
+inline void printVec(const std::vector<T>& v);
+
+template <typename T>
+struct is_vector : std::false_type {};
+template <typename T, typename A>
+struct is_vector<std::vector<T, A>> : std::true_type {};
+
+template <typename T>
+inline void printElem(const T& v) {
+  if constexpr (std::is_same_v<T, bool>)
+    std::cout << (v ? "true" : "false");
+  else if constexpr (is_vector<T>::value)
+    printVec(v);
+  else
+    std::cout << v;
+}
 
 template <typename T>
 inline void printVec(const std::vector<T>& v) {
   std::cout << '[';
   for (size_t i = 0; i < v.size(); ++i) {
-    if constexpr (std::is_same_v<T, bool>)
-      std::cout << (v[i] ? "true" : "false");
-    else
-      std::cout << v[i];
+    // Explicit <T>: vector<bool>::operator[] returns a proxy reference, not
+    // bool, so deducing from v[i] would pick the wrong printElem branch.
+    printElem<T>(v[i]);
     if (i + 1 < v.size()) std::cout << ", ";
   }
   std::cout << ']';
 }
 
 // ─── Generic result reporter ──────────────────────────────────────────────────
-
-template <typename T>
-inline void printElem(const T& v) {
-  if constexpr (std::is_same_v<T, bool>)
-    std::cout << (v ? "true" : "false");
-  else
-    std::cout << v;
-}
 
 template <typename T>
 inline void reportResult(const std::string& label, const std::vector<T>& actual,
@@ -96,6 +107,22 @@ inline std::vector<bool> boolVec(std::istream& in) {
   std::vector<bool> v;
   std::string t;
   while (in >> t) v.push_back(t == "true");
+  return v;
+}
+
+// Bracket/comma format: [true,false,true] → vector<bool>
+inline std::vector<bool> boolVecBracketed(std::istream& in) {
+  std::vector<bool> v;
+  std::string line;
+  while (std::getline(in, line)) {
+    if (line.empty()) continue;
+    for (char& c : line)
+      if (c == '[' || c == ']' || c == ',') c = ' ';
+    std::istringstream iss(line);
+    std::string t;
+    while (iss >> t) v.push_back(t == "true");
+    if (!v.empty()) break;  // read only first non-empty line
+  }
   return v;
 }
 
