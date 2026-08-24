@@ -41,6 +41,11 @@ Known shapes (scripts/new.sh <number> "<Title>" <shape> <methodName>):
   vec-int          vector<int> f(vector<int>&, int)     -> vector<int>
   vec-int-scalar   int f(vector<int>&, int)              -> int
   matrix           vector<int> f(vector<vector<int>>&)  -> vector<int>
+  scalar           int f(int)                            -> int
+  two-scalar       int f(int, int)                       -> int
+  scalar-vec       vector<int> f(int)                    -> vector<int>
+  scalar-matrix    vector<vector<int>> f(int)             -> vector<vector<int>>
+  scalar-bool      bool f(int)                            -> bool
   scalar-vec-scalar int f(int, vector<int>&)             -> int
   matrix-vec-scalar int f(vector<vector<int>>&, vector<int>&) -> int
   str-scalar-str   string f(string, long long)           -> string
@@ -251,6 +256,156 @@ inline void run() {
       Parse::int2DVecBracketed,  // input: [[0,1,1],[1,0,1],...]
       Parse::intVecBracketed,    // output: [1,2,3,...]
       [](auto d) { return Solution().${method}(d); }
+  );
+}
+EOF
+    ;;
+
+scalar)
+    cat > "$file" <<EOF
+#include "runner.h"
+#include <vector>
+
+using namespace std;
+
+class Solution {
+ public:
+  int ${method}(int n) {
+    // TODO: implement
+  }
+};
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
+      "${title}",
+      [](istream& in) -> int {
+        int n = 0;
+        in >> n;
+        return n;
+      },
+      Parse::intVec,  // output: single int (as a 1-element vector)
+      [](auto n) { return vector<int>{Solution().${method}(n)}; }
+  );
+}
+EOF
+    ;;
+
+two-scalar)
+    cat > "$file" <<EOF
+#include "runner.h"
+#include <vector>
+
+using namespace std;
+
+class Solution {
+ public:
+  int ${method}(int a, int b) {
+    // TODO: implement
+  }
+};
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
+      "${title}",
+      [](istream& in) -> pair<int, int> {
+        int a = 0, b = 0;
+        in >> a >> b;
+        return {a, b};
+      },
+      Parse::intVec,  // output: single int (as a 1-element vector)
+      [](auto p) { return vector<int>{Solution().${method}(p.first, p.second)}; }
+  );
+}
+EOF
+    ;;
+
+scalar-vec)
+    cat > "$file" <<EOF
+#include "runner.h"
+#include <vector>
+
+using namespace std;
+
+class Solution {
+ public:
+  vector<int> ${method}(int n) {
+    // TODO: implement
+  }
+};
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
+      "${title}",
+      [](istream& in) -> int {
+        int n = 0;
+        in >> n;
+        return n;
+      },
+      Parse::intVecBracketed,  // output: [1,2,3,...]
+      [](auto n) { return Solution().${method}(n); }
+  );
+}
+EOF
+    ;;
+
+scalar-matrix)
+    cat > "$file" <<EOF
+#include "runner.h"
+#include <vector>
+
+using namespace std;
+
+class Solution {
+ public:
+  vector<vector<int>> ${method}(int n) {
+    // TODO: implement
+  }
+};
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
+      "${title}",
+      [](istream& in) -> int {
+        int n = 0;
+        in >> n;
+        return n;
+      },
+      Parse::int2DVecBracketed,  // output: [[1],[1,1],...]
+      [](auto n) { return Solution().${method}(n); }
+  );
+}
+EOF
+    ;;
+
+scalar-bool)
+    cat > "$file" <<EOF
+#include "runner.h"
+#include <vector>
+
+using namespace std;
+
+class Solution {
+ public:
+  bool ${method}(int n) {
+    // TODO: implement
+  }
+};
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/${bucket}/${n}",
+      "${title}",
+      [](istream& in) -> int {
+        int n = 0;
+        in >> n;
+        return n;
+      },
+      Parse::boolVec,  // output: single bool (as a 1-element vector), true/false
+      [](auto n) { return vector<bool>{Solution().${method}(n)}; }
   );
 }
 EOF

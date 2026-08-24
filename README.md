@@ -43,6 +43,11 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
   | `vec-int` | `vector<int> f(vector<int>&, int)` → `vector<int>` |
   | `vec-int-scalar` | `int f(vector<int>&, int)` → `int` |
   | `matrix` | `vector<int> f(vector<vector<int>>&)` → `vector<int>` |
+  | `scalar` | `int f(int)` → `int` |
+  | `two-scalar` | `int f(int, int)` → `int` |
+  | `scalar-vec` | `vector<int> f(int)` → `vector<int>` |
+  | `scalar-matrix` | `vector<vector<int>> f(int)` → `vector<vector<int>>` |
+  | `scalar-bool` | `bool f(int)` → `bool` (`true`/`false`) |
   | `scalar-vec-scalar` | `int f(int, vector<int>&)` → `int` |
   | `matrix-vec-scalar` | `int f(vector<vector<int>>&, vector<int>&)` → `int` |
   | `str-scalar-str` | `string f(string, long long)` → `string` |
