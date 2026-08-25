@@ -149,6 +149,15 @@ inline std::string quotedString(std::istream& in) {
   return stripQuotes(s);
 }
 
+// Full line, quotes stripped: "the quick brown fox" → the quick brown fox
+// Use this instead of quotedString whenever the quoted text can contain
+// spaces -- quotedString stops at the first whitespace.
+inline std::string quotedLine(std::istream& in) {
+  std::string line;
+  std::getline(in, line);
+  return stripQuotes(line);
+}
+
 // Bracket/comma format: [1,2,3] or [-3,4,3,2] → vector<int>
 inline std::vector<int> intVecBracketed(std::istream& in) {
   std::vector<int> v;
