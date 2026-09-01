@@ -158,6 +158,30 @@ inline std::string quotedLine(std::istream& in) {
   return stripQuotes(line);
 }
 
+// Bracket/comma format of quoted strings: ["ab","cd","ef"] → vector<string>
+// (quotes stripped). Used for grid-of-strings inputs like a classroom map.
+inline std::vector<std::string> strVecBracketed(std::istream& in) {
+  std::vector<std::string> v;
+  std::string line;
+  while (std::getline(in, line)) {
+    if (line.empty()) continue;
+    size_t i = 0;
+    while (i < line.size()) {
+      if (line[i] == '"' || line[i] == '\'') {
+        char quote = line[i];
+        size_t j = line.find(quote, i + 1);
+        if (j == std::string::npos) break;
+        v.push_back(line.substr(i + 1, j - i - 1));
+        i = j + 1;
+      } else {
+        ++i;
+      }
+    }
+    if (!v.empty()) break;
+  }
+  return v;
+}
+
 // Bracket/comma format: [1,2,3] or [-3,4,3,2] → vector<int>
 inline std::vector<int> intVecBracketed(std::istream& in) {
   std::vector<int> v;
