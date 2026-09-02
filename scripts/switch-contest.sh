@@ -44,15 +44,21 @@ select q in "${questions[@]}"; do
     echo "Invalid selection, try again." >&2
 done
 
-match="$contestDir/$q.cpp"
-rel="${match#$root/}"
+harness="$contestDir/tests/$q/run.cpp"
+if [ ! -f "$harness" ]; then
+    echo "Found $q.cpp but no matching tests/$q/run.cpp harness -- migrate this question to the new layout" >&2
+    exit 1
+fi
+rel="${harness#$root/}"
 
 cat > "$root/main.cpp" <<EOF
 // ─────────────────────────────────────────────────────────────────────────────
 //  To switch problems: run \`scripts/switch.sh <problem-number>\`, or for a
 //  contest problem run \`scripts/switch-contest.sh\` (interactive menu), or
 //  change the #include below by hand. Each problems/*.cpp / contests/*/Qn.cpp
-//  file defines its own run() wiring up runTests() -- nothing else needs editing.
+//  file is the LeetCode-submittable solution only; its matching
+//  tests/<bucket>/<n>/run.cpp (or contests/.../tests/<Q>/run.cpp) defines
+//  run() wiring up runTests() -- nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
 #include "${rel}"

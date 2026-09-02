@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-# Extract the LeetCode-submittable portion of a problem file -- everything
-# before `inline void run()`, with the `#include "runner.h"` line dropped
-# (LeetCode's judge has no such header) -- and copy it to the clipboard.
+# Copy the LeetCode-submittable solution file to the clipboard. Since
+# problems/<bucket>/<n>.cpp (and contests/.../Qn.cpp) files contain nothing
+# but the solution itself -- no runner.h, no run() -- this just needs to
+# find the right file and cat it, no extraction required.
 # Usage: scripts/copy.sh [problem-number]
-# With no argument, uses whatever main.cpp currently includes.
+# With no argument, resolves the solution file from whatever harness
+# main.cpp currently includes (tests/<bucket>/<n>/run.cpp or
+# contests/.../tests/<Q>/run.cpp).
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -16,15 +19,20 @@ if [ $# -eq 1 ]; then
         exit 1
     fi
 else
-    rel=$(grep -oE '#include "(problems|contests)/[^"]+\.cpp"' "$root/main.cpp" | sed -E 's/#include "(.*)"/\1/')
-    if [ -z "$rel" ]; then
-        echo "Could not resolve the active file from main.cpp" >&2
+    harness_rel=$(grep -oE '#include "(tests|contests)/[^"]+/run\.cpp"' "$root/main.cpp" | sed -E 's/#include "(.*)"/\1/')
+    if [ -z "$harness_rel" ]; then
+        echo "Could not resolve the active harness from main.cpp" >&2
         exit 1
     fi
-    match="$root/$rel"
+    solution_rel=$(grep -oE '#include "(problems|contests)/[^"]+\.cpp"' "$root/$harness_rel" | sed -E 's/#include "(.*)"/\1/')
+    if [ -z "$solution_rel" ]; then
+        echo "Could not resolve the solution file from ${harness_rel}" >&2
+        exit 1
+    fi
+    match="$root/$solution_rel"
 fi
 
-output=$(awk '/^inline void run\(\)/{exit} {print}' "$match" | grep -v '#include "runner.h"')
+output=$(cat "$match")
 
 echo "$output"
 

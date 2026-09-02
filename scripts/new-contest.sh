@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Scaffold a new contest: creates contests/<Type>/<number>/Q1..Qn.cpp +
-# contests/<Type>/<number>/tests/Q1..Qn/, then switches to Q1.
+# Scaffold a new contest: creates contests/<Type>/<number>/Q1..Qn.cpp
+# (solution only, LeetCode-submittable as-is) +
+# contests/<Type>/<number>/tests/Q1..Qn/run.cpp (test harness) +
+# tests/Q1..Qn/ fixtures, then switches to Q1.
 # Usage: scripts/new-contest.sh
 # Prompts interactively for contest type (Weekly/Biweekly), number,
 # number of questions (blank defaults to 4), and number of test cases
@@ -54,7 +56,6 @@ for ((i = 1; i <= numQ; i++)); do
         : >"$contestDir/tests/Q${i}/${t}.out"
     done
     cat >"$contestDir/Q${i}.cpp" <<EOF
-#include "runner.h"
 #include <vector>
 
 using namespace std;
@@ -63,6 +64,10 @@ class Solution {
  public:
   // TODO: implement
 };
+EOF
+    cat >"$contestDir/tests/Q${i}/run.cpp" <<EOF
+#include "runner.h"
+#include "contests/${contest}/Q${i}.cpp"
 
 inline void run() {
   runTests(
@@ -78,13 +83,15 @@ done
 
 echo "Created contests/${contest}/ with Q1..Q${numQ}.cpp and tests/Q1..Q${numQ}/ (${numTests} empty .in/.out pair(s) each)"
 
-rel="contests/${contest}/Q1.cpp"
+rel="contests/${contest}/tests/Q1/run.cpp"
 cat > "$root/main.cpp" <<EOF
 // ─────────────────────────────────────────────────────────────────────────────
 //  To switch problems: run \`scripts/switch.sh <problem-number>\`, or for a
 //  contest problem run \`scripts/switch-contest.sh\` (interactive menu), or
 //  change the #include below by hand. Each problems/*.cpp / contests/*/Qn.cpp
-//  file defines its own run() wiring up runTests() -- nothing else needs editing.
+//  file is the LeetCode-submittable solution only; its matching
+//  tests/<bucket>/<n>/run.cpp (or contests/.../tests/<Q>/run.cpp) defines
+//  run() wiring up runTests() -- nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
 #include "${rel}"
