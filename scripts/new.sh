@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Scaffold a new problem: creates problems/<bucket>/<n>.cpp + tests/<bucket>/<n>/, then switches to it.
+# Scaffold a new problem: creates problems/<bucket>/<n>.cpp (solution only,
+# LeetCode-submittable as-is) + tests/<bucket>/<n>/run.cpp (test harness) +
+# tests/<bucket>/<n>/ fixtures, then switches to it.
 # Usage: scripts/new.sh <problem-number> ["<Title>"] [shape] [methodName] [--tests N]
 #
 # If [shape] and [methodName] are both given, generates a fully-wired run()
@@ -76,9 +78,11 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 bucket_start=$(( (n/1000)*1000 ))
 bucket_end=$((bucket_start+999))
 bucket="${bucket_start}-${bucket_end}"
-file="$root/problems/${bucket}/${n}.cpp"
+solution_file="$root/problems/${bucket}/${n}.cpp"
+solution_rel="problems/${bucket}/${n}.cpp"
+harness_file="$root/tests/${bucket}/${n}/run.cpp"
 
-if [ -e "$file" ]; then
+if [ -e "$solution_file" ]; then
     echo "problems/${bucket}/${n}.cpp already exists" >&2
     exit 1
 fi
@@ -98,8 +102,7 @@ done
 
 case "$shape" in
 "")
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -108,6 +111,10 @@ class Solution {
  public:
   // TODO: implement
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -122,8 +129,7 @@ EOF
     ;;
 
 vec)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -134,6 +140,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -148,8 +158,7 @@ EOF
     ;;
 
 vec-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -160,6 +169,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -174,8 +187,7 @@ EOF
     ;;
 
 vec-int)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -186,6 +198,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -205,8 +221,7 @@ EOF
     ;;
 
 vec-int-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -217,6 +232,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -236,8 +255,7 @@ EOF
     ;;
 
 matrix)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -248,6 +266,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -262,10 +284,7 @@ EOF
     ;;
 
 scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
-#include <vector>
-
+    cat > "$solution_file" <<EOF
 using namespace std;
 
 class Solution {
@@ -274,6 +293,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -292,10 +315,7 @@ EOF
     ;;
 
 two-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
-#include <vector>
-
+    cat > "$solution_file" <<EOF
 using namespace std;
 
 class Solution {
@@ -304,6 +324,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -322,8 +346,7 @@ EOF
     ;;
 
 scalar-vec)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -334,6 +357,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -352,8 +379,7 @@ EOF
     ;;
 
 scalar-matrix)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -364,6 +390,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -382,10 +412,7 @@ EOF
     ;;
 
 scalar-bool)
-    cat > "$file" <<EOF
-#include "runner.h"
-#include <vector>
-
+    cat > "$solution_file" <<EOF
 using namespace std;
 
 class Solution {
@@ -394,6 +421,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -412,8 +443,7 @@ EOF
     ;;
 
 scalar-vec-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -424,6 +454,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -443,8 +477,7 @@ EOF
     ;;
 
 matrix-vec-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <vector>
 
 using namespace std;
@@ -455,6 +488,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -473,8 +510,7 @@ EOF
     ;;
 
 str-scalar-str)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <string>
 
 using namespace std;
@@ -485,6 +521,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -504,8 +544,7 @@ EOF
     ;;
 
 str-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <string>
 
 using namespace std;
@@ -516,6 +555,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -530,8 +573,7 @@ EOF
     ;;
 
 two-str-scalar)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <string>
 
 using namespace std;
@@ -542,6 +584,10 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -560,10 +606,8 @@ EOF
     ;;
 
 str-query)
-    cat > "$file" <<EOF
-#include "runner.h"
+    cat > "$solution_file" <<EOF
 #include <string>
-#include <tuple>
 #include <vector>
 
 using namespace std;
@@ -574,6 +618,12 @@ class Solution {
     // TODO: implement
   }
 };
+EOF
+    cat > "$harness_file" <<EOF
+#include "runner.h"
+#include <tuple>
+
+#include "${solution_rel}"
 
 inline void run() {
   runTests(
@@ -602,5 +652,5 @@ EOF
     ;;
 esac
 
-echo "Created problems/${bucket}/${n}.cpp and tests/${bucket}/${n}/ (${tests_count} empty .in/.out pair(s))"
+echo "Created problems/${bucket}/${n}.cpp and tests/${bucket}/${n}/ (${tests_count} empty .in/.out pair(s) + run.cpp harness)"
 "$root/scripts/switch.sh" "$n"

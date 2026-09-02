@@ -1,0 +1,14 @@
+#include "runner.h"
+#include "problems/2000-2999/2220.cpp"
+
+inline void run() {
+  runTests(
+      string(PROJECT_ROOT) + "/tests/2000-2999/2220", "Minimum Bit Flips to Convert Number",
+      [](istream& in) -> pair<int, int> {
+        int start = 0, goal = 0;
+        in >> start >> goal;
+        return {start, goal};
+      },
+      Parse::intVec,  // output: single int (as a 1-element vector)
+      [](auto p) { return vector<int>{Solution().minBitFlips(p.first, p.second)}; });
+}

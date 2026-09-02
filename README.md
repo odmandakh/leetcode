@@ -16,9 +16,9 @@ cmake --build build
 This runs every `.in`/`.out` case under the active problem's `tests/<bucket>/<n>/` directory and prints PASS/FAIL (with timing) per case.
 
 ## Switching Problems
-Only one problem is "active" (included by `main.cpp`) at a time. Each `problems/<n>.cpp` owns its own `Solution` class *and* the `run()` call that wires it up to `runTests()` — so switching never touches `CMakeLists.txt` and can't mismatch a parser to the wrong problem.
+Only one problem is "active" (included by `main.cpp`) at a time. Each problem is split across two files: `problems/<bucket>/<n>.cpp` holds *only* the `Solution` class — nothing else, so it's directly LeetCode-submittable as-is (see "Copying a Solution to LeetCode" below) — and `tests/<bucket>/<n>/run.cpp` holds the `run()` call that includes it and wires it up to `runTests()`. `main.cpp` always includes the `run.cpp` harness, never the solution file directly. Switching never touches `CMakeLists.txt` and can't mismatch a parser to the wrong problem.
 
-Problem files live in number-range subfolders — `problems/0-999/`, `problems/1000-1999/`, `problems/2000-2999/`, `problems/3000-3999/`, etc. — instead of one flat directory, to keep things browsable as the collection grows. `tests/` mirrors the exact same buckets (`tests/2000-2999/2161/` matches `problems/2000-2999/2161.cpp`). `scripts/new.sh`/`scripts/switch.sh` compute the right bucket automatically; you never need to pick one by hand.
+Problem files live in number-range subfolders — `problems/0-999/`, `problems/1000-1999/`, `problems/2000-2999/`, `problems/3000-3999/`, etc. — instead of one flat directory, to keep things browsable as the collection grows. `tests/` mirrors the exact same buckets (`tests/2000-2999/2161/run.cpp` is the harness for `problems/2000-2999/2161.cpp`). `scripts/new.sh`/`scripts/switch.sh` compute the right bucket and write/find both files automatically; you never need to pick one by hand.
 
 - **Switch to an already-solved problem:**
   ```bash
@@ -32,7 +32,7 @@ Problem files live in number-range subfolders — `problems/0-999/`, `problems/1
   # e.g. scripts/new.sh 2958 "Longest Subarray With K Frequency" vec-int-scalar maxSubarrayLength
   # e.g. scripts/new.sh 42 "Trapping Rain Water" vec-scalar trap --tests 5
   ```
-  This scaffolds `problems/<bucket>/<n>.cpp` and a `tests/<bucket>/<n>/` directory pre-populated with empty `1.in`/`1.out`, `2.in`/`2.out`, `3.in`/`3.out` placeholder pairs (ready to paste LeetCode's examples into), then switches `main.cpp` to point at it. `--tests N` (or `-t N`) changes how many pairs get created — it's a flag, not a positional arg, so it works whether or not you also pass `shape`/`methodName`, and can go anywhere on the command line. Defaults to 3 if omitted.
+  This scaffolds `problems/<bucket>/<n>.cpp` (the solution file) and a `tests/<bucket>/<n>/` directory containing `run.cpp` (the harness) plus empty `1.in`/`1.out`, `2.in`/`2.out`, `3.in`/`3.out` placeholder pairs (ready to paste LeetCode's examples into), then switches `main.cpp` to point at the harness. `--tests N` (or `-t N`) changes how many pairs get created — it's a flag, not a positional arg, so it works whether or not you also pass `shape`/`methodName`, and can go anywhere on the command line. Defaults to 3 if omitted.
 
   If you pass a `shape` + `methodName`, the generated `run()` is **fully wired** — no "TODO: pick parser" guessing, no wrong-arity bugs. `scripts/new.sh` (no args) prints the current shape table; the shapes cover every signature this repo has needed so far:
 
@@ -71,22 +71,26 @@ contests/
       Q4.cpp
       tests/
         Q1/
+          run.cpp
         Q2/
+          run.cpp
         Q3/
+          run.cpp
         Q4/
+          run.cpp
     516/
       ...
   Biweekly Contest/
     189/
       ...
 ```
-Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own `Solution` class and `run()` wiring up `runTests()`.
+Each `Qn.cpp` is split the same way as a numbered problem: it holds *only* the `Solution` class (LeetCode-submittable as-is), and its matching `tests/Qn/run.cpp` holds the `run()` call wiring it up to `runTests()`.
 
 - **Start a new contest:**
   ```bash
   scripts/new-contest.sh
   ```
-  Prompts interactively: pick `Weekly Contest` or `Biweekly Contest` from a numbered menu, enter the contest number, then enter the number of questions (blank defaults to 4), then enter the number of test cases per question (blank defaults to 3). Scaffolds `contests/<Type>/<number>/Q1..Qn.cpp` (generic TODO stubs) and matching `tests/Q1..Qn/` directories -- each pre-populated with that many empty `<k>.in`/`<k>.out` placeholder pairs -- then switches `main.cpp` to `Q1`.
+  Prompts interactively: pick `Weekly Contest` or `Biweekly Contest` from a numbered menu, enter the contest number, then enter the number of questions (blank defaults to 4), then enter the number of test cases per question (blank defaults to 3). Scaffolds `contests/<Type>/<number>/Q1..Qn.cpp` (generic TODO stubs) and matching `tests/Q1..Qn/run.cpp` harnesses -- each test directory also pre-populated with that many empty `<k>.in`/`<k>.out` placeholder pairs -- then switches `main.cpp` to `Q1`'s harness.
 - **Switch to a specific contest question:**
   ```bash
   scripts/switch-contest.sh
@@ -97,14 +101,14 @@ Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own
 
 ## Copying a Solution to LeetCode
 
-Every `problems/*.cpp`/`contests/*/Qn.cpp` file mixes the actual solution with local test-harness plumbing (`#include "runner.h"`, `run()`) that LeetCode's judge doesn't have and doesn't want. `scripts/copy.sh` extracts just the submittable part -- everything above `inline void run()`, with the `runner.h` include dropped -- and copies it to your clipboard:
+Since `problems/*.cpp`/`contests/*/Qn.cpp` files contain nothing but the solution itself -- no `runner.h`, no `run()`, that all lives in the separate `run.cpp` harness -- copying one to LeetCode's submission box needs no extraction at all. `scripts/copy.sh` just finds the right file and copies it to your clipboard:
 
 ```bash
 scripts/copy.sh <problem-number>   # e.g. scripts/copy.sh 3568
-scripts/copy.sh                    # no arg: uses whatever main.cpp currently includes
+scripts/copy.sh                    # no arg: resolves the solution file from whatever harness main.cpp currently includes
 ```
 
-Uses `pbcopy`/`xclip`/`clip.exe` depending on platform; if none are found it just prints the extracted code instead of failing. No changes to any problem file are needed for this to work -- it relies on the convention (already true for every file) that `class Solution` always comes before `run()`.
+Uses `pbcopy`/`xclip`/`clip.exe` depending on platform; if none are found it just prints the file instead of failing.
 
 ## Workflow
 - Use `cpp-pro` for C++ implementation, debugging, and performance improvements.

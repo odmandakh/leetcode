@@ -50,12 +50,12 @@ Compare the inferred signature against `scripts/new.sh`'s shape table (run `scri
   scripts/new.sh <n> "<Title>" <shape> <methodName> --tests <exampleCount>
   ```
   This produces a fully-wired `run()` already — skip straight to Step 4.
-- **If it's bespoke** (e.g. a `ListNode*`/`TreeNode*` parameter, a mix of 3+ container types, anything not in the table): scaffold the generic stub instead, then hand-wire both the class signature and the parser yourself, the same way you've done for every bespoke problem this session (e.g. `2058.cpp`'s `ListNode*`, `3568.cpp`'s `vector<string>&, int`):
+- **If it's bespoke** (e.g. a `ListNode*`/`TreeNode*` parameter, a mix of 3+ container types, anything not in the table): scaffold the generic stub instead, then hand-wire both files yourself, the same way you've done for every bespoke problem this session (e.g. `2058.cpp`'s `ListNode*`, `3568.cpp`'s `vector<string>&, int`):
   ```
   scripts/new.sh <n> "<Title>" --tests <exampleCount>
   ```
-  Then `Edit` the generated file: replace `// TODO: implement` inside `class Solution` with the real signature (empty body), and replace the generic `Parse::intVec` placeholders in `run()` with the correct parser, adding new helpers to `runner.h` if a genuinely new input shape appears (following the precedent of `quotedLine`/`strVecBracketed` added earlier this session) — don't add a `runner.h` helper for a one-off shape that won't recur.
-  - If a `ListNode`/`TreeNode`-style structure is needed and isn't already defined in the file, define the real `struct` (not a comment stub) and build the structure from the parsed input inline in `run()`'s solve lambda, matching `2058.cpp`'s pattern.
+  This creates two files — `problems/<bucket>/<n>.cpp` (solution) and `tests/<bucket>/<n>/run.cpp` (harness). `Edit` **both**: in the solution file, replace `// TODO: implement` inside `class Solution` with the real signature (empty body); in the harness file, replace the generic `Parse::intVec` placeholders in `run()` with the correct parser. Add new helpers to `runner.h` if a genuinely new input shape appears (following the precedent of `quotedLine`/`strVecBracketed` added earlier this session) — don't add a `runner.h` helper for a one-off shape that won't recur.
+  - If a `ListNode`/`TreeNode`-style structure is needed and isn't already defined, define the real `struct` (not a comment stub) in the **solution** file (it's part of the type the method signature uses), and build the structure from the parsed input inline in the **harness** file's solve lambda, matching `2058.cpp`'s pattern.
 
 If the same bespoke shape shows up on a second occurrence, consider proposing to add it to `scripts/new.sh`'s table and `README.md` (matching the precedent set earlier this session) — but don't do this preemptively for a single one-off case.
 
@@ -72,11 +72,11 @@ Write each parsed example into `tests/<bucket>/<n>/<k>.in` / `<k>.out` (created 
      printf '<1 for Weekly, 2 for Biweekly>\n<contest-number>\n4\n3\n' | scripts/new-contest.sh
      ```
   2. If it already exists, skip that — don't re-scaffold over existing sibling questions.
-  3. Hand-wire the specific `Qn.cpp` (generic stub or shape-matched, same as Step 2) and its `tests/Qn/` fixtures (same as Step 3).
-  4. Point `main.cpp` at the target question directly (writing the same template `switch.sh`/`switch-contest.sh` produce, since piping through `switch-contest.sh`'s two nested menus just to select a path you already know precisely isn't worth the fragility):
+  3. Hand-wire the specific `Qn.cpp` (solution) and its `tests/Qn/run.cpp` (harness, generic stub or shape-matched, same two-file split as Step 2) and fill `tests/Qn/` fixtures (same as Step 3).
+  4. Point `main.cpp` at the target question's **harness** file directly (writing the same template `switch.sh`/`switch-contest.sh` produce, since piping through `switch-contest.sh`'s two nested menus just to select a path you already know precisely isn't worth the fragility):
      ```cpp
      #include "runner.h"
-     #include "contests/<Type>/<number>/Q<n>.cpp"
+     #include "contests/<Type>/<number>/tests/Q<n>/run.cpp"
 
      int main() { run(); return 0; }
      ```
@@ -85,4 +85,4 @@ Write each parsed example into `tests/<bucket>/<n>/<k>.in` / `<k>.out` (created 
 
 ## Step 5 — Report back
 
-Summarize concisely: file(s) created, method signature used (flag if inferred rather than taken from a pasted code block, since that's the lower-confidence path), number of test cases filled, and confirmation that it builds cleanly. Mention that `scripts/copy.sh <n>` is available whenever they're ready to paste the finished solution back to LeetCode (it strips the local test-harness plumbing automatically) — just a one-line pointer, don't run it now, since there's no solution to copy yet. Then stop — solving it is the user's next step, not this skill's.
+Summarize concisely: file(s) created (both the solution file and its `run.cpp` harness), method signature used (flag if inferred rather than taken from a pasted code block, since that's the lower-confidence path), number of test cases filled, and confirmation that it builds cleanly. Mention that `scripts/copy.sh <n>` is available whenever they're ready to paste the finished solution back to LeetCode — just a one-line pointer, don't run it now, since there's no solution to copy yet. Then stop — solving it is the user's next step, not this skill's.
