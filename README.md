@@ -95,6 +95,17 @@ Each `Qn.cpp` is self-contained exactly like a `problems/*.cpp` file — its own
 
 `scripts/switch.sh <problem-number>` is unchanged and only handles numbered problems; contest switching is a separate script (`scripts/switch-contest.sh`) since the two live in different trees with different identifiers.
 
+## Copying a Solution to LeetCode
+
+Every `problems/*.cpp`/`contests/*/Qn.cpp` file mixes the actual solution with local test-harness plumbing (`#include "runner.h"`, `run()`) that LeetCode's judge doesn't have and doesn't want. `scripts/copy.sh` extracts just the submittable part -- everything above `inline void run()`, with the `runner.h` include dropped -- and copies it to your clipboard:
+
+```bash
+scripts/copy.sh <problem-number>   # e.g. scripts/copy.sh 3568
+scripts/copy.sh                    # no arg: uses whatever main.cpp currently includes
+```
+
+Uses `pbcopy`/`xclip`/`clip.exe` depending on platform; if none are found it just prints the extracted code instead of failing. No changes to any problem file are needed for this to work -- it relies on the convention (already true for every file) that `class Solution` always comes before `run()`.
+
 ## Workflow
 - Use `cpp-pro` for C++ implementation, debugging, and performance improvements.
 - Use `leetcode-teacher` to explain patterns, invariants, and interview-ready reasoning.

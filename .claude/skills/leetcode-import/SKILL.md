@@ -85,4 +85,4 @@ Write each parsed example into `tests/<bucket>/<n>/<k>.in` / `<k>.out` (created 
 
 ## Step 5 — Report back
 
-Summarize concisely: file(s) created, method signature used (flag if inferred rather than taken from a pasted code block, since that's the lower-confidence path), number of test cases filled, and confirmation that it builds cleanly. Then stop — solving it is the user's next step, not this skill's.
+Summarize concisely: file(s) created, method signature used (flag if inferred rather than taken from a pasted code block, since that's the lower-confidence path), number of test cases filled, and confirmation that it builds cleanly. Mention that `scripts/copy.sh <n>` is available whenever they're ready to paste the finished solution back to LeetCode (it strips the local test-harness plumbing automatically) — just a one-line pointer, don't run it now, since there's no solution to copy yet. Then stop — solving it is the user's next step, not this skill's.
