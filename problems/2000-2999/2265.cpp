@@ -1,4 +1,3 @@
-#include <climits>
 #include <queue>
 #include <string>
 #include <vector>
@@ -6,7 +5,7 @@
 using namespace std;
 
 // Definition for a binary tree node (LeetCode's standard interface --
-// raw pointers are required here since minDiffInBST(TreeNode*) must match
+// raw pointers are required here since averageOfSubtree(TreeNode*) must match
 // the exact signature LeetCode expects; no smart-pointer alternative).
 struct TreeNode {
   int val;
@@ -17,23 +16,25 @@ struct TreeNode {
   TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
+// ASSISTED: AI provided the postorder sum/size accumulation solution logic directly.
 class Solution {
  public:
-  int minDiffInBST(TreeNode* root) {
-    int minDiff = INT_MAX;
-    TreeNode* prev = nullptr;
-    inorder(root, prev, minDiff);
-    return minDiff;
+  int averageOfSubtree(TreeNode* root) {
+    int count = 0;
+    dfs(root, count);
+    return count;
   }
 
-  void inorder(TreeNode* node, TreeNode*& prev, int& minDiff) {
-    if (node == nullptr) return;
-    inorder(node->left, prev, minDiff);
-    if (prev != nullptr) {
-      minDiff = min(minDiff, node->val - prev->val);
-    }
-    prev = node;
-    inorder(node->right, prev, minDiff);
+ private:
+  // Returns {sum, size} of the subtree rooted at node, tallying matches into count.
+  pair<int, int> dfs(TreeNode* node, int& count) {
+    if (node == nullptr) return {0, 0};
+    auto [leftSum, leftSize] = dfs(node->left, count);
+    auto [rightSum, rightSize] = dfs(node->right, count);
+    int sum = leftSum + rightSum + node->val;
+    int size = leftSize + rightSize + 1;
+    if (node->val == sum / size) ++count;
+    return {sum, size};
   }
 };
 
