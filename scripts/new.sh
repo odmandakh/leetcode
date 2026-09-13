@@ -130,6 +130,7 @@ EOF
 
 vec)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -138,6 +139,7 @@ class Solution {
  public:
   vector<int> ${method}(vector<int>& nums) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -188,6 +190,7 @@ EOF
 
 vec-int)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -196,6 +199,7 @@ class Solution {
  public:
   vector<int> ${method}(vector<int>& nums, int x) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -256,6 +260,7 @@ EOF
 
 matrix)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -264,6 +269,7 @@ class Solution {
  public:
   vector<int> ${method}(vector<vector<int>>& matrix) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -347,6 +353,7 @@ EOF
 
 scalar-vec)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -355,6 +362,7 @@ class Solution {
  public:
   vector<int> ${method}(int n) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -380,6 +388,7 @@ EOF
 
 scalar-matrix)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -388,6 +397,7 @@ class Solution {
  public:
   vector<vector<int>> ${method}(int n) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -607,6 +617,7 @@ EOF
 
 str-query)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <string>
 #include <vector>
 
@@ -616,6 +627,7 @@ class Solution {
  public:
   vector<int> ${method}(string s, string queryCharacters, vector<int>& queryIndices) {
     // TODO: implement
+    abort();
   }
 };
 EOF
