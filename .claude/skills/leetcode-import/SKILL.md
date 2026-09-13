@@ -81,7 +81,7 @@ Write each parsed example into `tests/<bucket>/<n>/<k>.in` / `<k>.out` (created 
      int main() { run(); return 0; }
      ```
 
-- Then always: `rm -f build/CMakeFiles/LeetCode.dir/main.cpp.o && cmake --build build -j4`, and confirm it compiles with **only** the expected `-Wreturn-type` warning (empty stub body) — any other warning/error means the signature or parser wiring is wrong and needs fixing before handing off. Run `./build/LeetCode` once too; PASS/FAIL doesn't matter yet (the body is empty), but a crash or a type mismatch in `reportResult` output does.
+- Then always: `rm -f build/CMakeFiles/LeetCode.dir/main.cpp.o && cmake --build build -j4`. For scalar/bool/string-returning shapes, confirm it compiles with **only** the expected `-Wreturn-type` warning (empty stub body). For container-returning shapes (`vec`, `vec-int`, `matrix`, `scalar-vec`, `scalar-matrix`, `str-query`), the stub calls `abort()` instead of falling off the end — falling off a `vector`-returning function is UB that can manifest as a hang (a garbage `size()` field makes `reportResult`'s `printVec` spin near-forever) rather than a clean crash, so expect a **clean build with no warnings** there instead. Any other warning/error, in either case, means the signature or parser wiring is wrong and needs fixing before handing off. Run `./build/LeetCode` once too; PASS/FAIL doesn't matter yet, but anything other than a normal PASS/FAIL report (a hang, a segfault, a type mismatch in `reportResult` output) means the wiring is broken — a deterministic `SIGABRT` from the container-shape stub is expected and fine.
 
 ## Step 5 — Report back
 
