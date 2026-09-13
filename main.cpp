@@ -7,7 +7,7 @@
 //  run() wiring up runTests() -- nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
-#include "contests/Weekly Contest/519/tests/Q1/run.cpp"
+#include "tests/0-999/835/run.cpp"
 
 int main() {
     run();
