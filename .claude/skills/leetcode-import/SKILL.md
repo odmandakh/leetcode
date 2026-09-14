@@ -63,6 +63,8 @@ If the same bespoke shape shows up on a second occurrence, consider proposing to
 
 Write each parsed example into `tests/<bucket>/<n>/<k>.in` / `<k>.out` (created empty by `new.sh`). If the page has more or fewer examples than the default `--tests 3`, adjust: delete the extras, or create additional numbered pairs — don't leave stray empty placeholder files, and don't silently drop a real example either.
 
+**Before writing any `.out` file, check the exact output parser the harness actually uses** — read the comment next to it (e.g. `// output: [1,2,3,...]` vs `// output: space-separated ints`) rather than assuming every vector-returning shape wants bracketed output. Most do (`vec`, `matrix`, `scalar-vec`, `str-query` all use `Parse::intVecBracketed`, matching the bracketed input convention) — but `vec-int`'s template is the one exception, using `Parse::intVec` (space-separated, unbracketed) for its vector output. Getting this wrong doesn't fail loudly: `Parse::intVec` silently parses a bracketed `[1,2,3]` line as zero ints (`[` isn't a valid int start), so the harness quietly compares the correct answer against an empty expected vector and reports a spurious mismatch instead of a parse error. This exact mistake happened on problem 1470's `.out` files — the solution was already correct, only the fixture format was wrong.
+
 ## Step 4 — Switch and sanity-check
 
 - For a numbered problem: `scripts/new.sh` already switches `main.cpp` for you.
