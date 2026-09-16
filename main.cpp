@@ -7,11 +7,7 @@
 //  run() wiring up runTests() -- nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
-<<<<<<< Updated upstream
-#include "tests/2000-2999/2472/run.cpp"
-=======
-#include "tests/1000-1999/1678/run.cpp"
->>>>>>> Stashed changes
+#include "tests/1000-1999/1621/run.cpp"
 
 int main() {
     run();
