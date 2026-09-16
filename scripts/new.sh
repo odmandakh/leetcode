@@ -521,6 +521,7 @@ EOF
 
 str-scalar-str)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <string>
 
 using namespace std;
@@ -529,6 +530,7 @@ class Solution {
  public:
   string ${method}(string s, long long t) {
     // TODO: implement
+    abort();
   }
 };
 EOF
