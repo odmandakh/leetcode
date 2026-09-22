@@ -7,7 +7,7 @@
 //  run() wiring up runTests() -- nothing else needs editing.
 // ─────────────────────────────────────────────────────────────────────────────
 #include "runner.h"
-#include "tests/0-999/951/run.cpp"
+#include "tests/1000-1999/1922/run.cpp"
 
 int main() {
     run();
