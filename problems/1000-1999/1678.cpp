@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <string>
 
 using namespace std;
@@ -6,7 +5,6 @@ using namespace std;
 class Solution {
  public:
   string interpret(string command) {
-<<<<<<< Updated upstream
     string ans;
 
     int i = 0;
@@ -34,9 +32,5 @@ class Solution {
     }
 
     return ans;
-=======
-    // TODO: implement
-    abort();
->>>>>>> Stashed changes
   }
 };
