@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <vector>
 
-
 using namespace std;
 
 class Solution {
@@ -51,4 +50,3 @@ class Solution {
     return ans;
   }
 };
-

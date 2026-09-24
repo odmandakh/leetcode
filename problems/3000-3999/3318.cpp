@@ -2,7 +2,6 @@
 #include <tuple>
 #include <vector>
 
-
 using namespace std;
 
 // ASSISTED: AI provided the sliding-window + sort-by-(count,value) solution logic directly.
@@ -41,4 +40,3 @@ class Solution {
     return ans;
   }
 };
-

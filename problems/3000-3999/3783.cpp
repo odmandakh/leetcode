@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <vector>
 
-
 using namespace std;
 
 class Solution {
@@ -16,4 +15,3 @@ class Solution {
     return abs(original - reversed);
   }
 };
-

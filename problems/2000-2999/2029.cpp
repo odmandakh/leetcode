@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <vector>
 
-
 using namespace std;
 
 // ASSISTED: asked for the solution directly instead of solving independently
@@ -18,4 +17,3 @@ class Solution {
     return abs(cnt[1] - cnt[2]) > 2;
   }
 };
-

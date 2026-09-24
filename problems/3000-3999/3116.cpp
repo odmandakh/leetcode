@@ -2,7 +2,6 @@
 #include <numeric>
 #include <vector>
 
-
 using namespace std;
 
 // ASSISTED: AI provided the binary-search + inclusion-exclusion solution logic directly.
@@ -48,4 +47,3 @@ class Solution {
     return lo;
   }
 };
-
