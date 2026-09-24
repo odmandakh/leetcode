@@ -137,7 +137,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}([[maybe_unused]] vector<int>& nums) {
+  vector<int> ${method}(vector<int>& nums) {
     // TODO: implement
     abort();
   }
@@ -168,7 +168,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] vector<int>& nums) {
+  int ${method}(vector<int>& nums) {
     // TODO: implement
     abort();
   }
@@ -199,7 +199,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}([[maybe_unused]] vector<int>& nums, [[maybe_unused]] int x) {
+  vector<int> ${method}(vector<int>& nums, int x) {
     // TODO: implement
     abort();
   }
@@ -235,7 +235,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] vector<int>& nums, [[maybe_unused]] int x) {
+  int ${method}(vector<int>& nums, int x) {
     // TODO: implement
     abort();
   }
@@ -271,7 +271,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}([[maybe_unused]] vector<vector<int>>& matrix) {
+  vector<int> ${method}(vector<vector<int>>& matrix) {
     // TODO: implement
     abort();
   }
@@ -301,7 +301,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] int n) {
+  int ${method}(int n) {
     // TODO: implement
     abort();
   }
@@ -335,7 +335,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] int a, [[maybe_unused]] int b) {
+  int ${method}(int a, int b) {
     // TODO: implement
     abort();
   }
@@ -370,7 +370,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}([[maybe_unused]] int n) {
+  vector<int> ${method}(int n) {
     // TODO: implement
     abort();
   }
@@ -405,7 +405,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<vector<int>> ${method}([[maybe_unused]] int n) {
+  vector<vector<int>> ${method}(int n) {
     // TODO: implement
     abort();
   }
@@ -439,7 +439,7 @@ using namespace std;
 
 class Solution {
  public:
-  bool ${method}([[maybe_unused]] int n) {
+  bool ${method}(int n) {
     // TODO: implement
     abort();
   }
@@ -474,7 +474,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] int n, [[maybe_unused]] vector<int>& nums) {
+  int ${method}(int n, vector<int>& nums) {
     // TODO: implement
     abort();
   }
@@ -510,7 +510,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] vector<vector<int>>& grid, [[maybe_unused]] vector<int>& nums) {
+  int ${method}(vector<vector<int>>& grid, vector<int>& nums) {
     // TODO: implement
     abort();
   }
@@ -545,7 +545,7 @@ using namespace std;
 
 class Solution {
  public:
-  string ${method}([[maybe_unused]] string s, [[maybe_unused]] long long t) {
+  string ${method}(string s, long long t) {
     // TODO: implement
     abort();
   }
@@ -581,7 +581,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] string s) {
+  int ${method}(string s) {
     // TODO: implement
     abort();
   }
@@ -612,7 +612,7 @@ using namespace std;
 
 class Solution {
  public:
-  int ${method}([[maybe_unused]] string a, [[maybe_unused]] string b) {
+  int ${method}(string a, string b) {
     // TODO: implement
     abort();
   }
@@ -648,8 +648,8 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}([[maybe_unused]] string s, [[maybe_unused]] string queryCharacters,
-                         [[maybe_unused]] vector<int>& queryIndices) {
+  vector<int> ${method}(string s, string queryCharacters,
+                         vector<int>& queryIndices) {
     // TODO: implement
     abort();
   }

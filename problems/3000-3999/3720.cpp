@@ -10,7 +10,7 @@ class Solution {
   vector<int> alph;
   Solution() : alph(26, 0) {}
 
-  optional<int> backtrace([[maybe_unused]] string s, string target, int index) {
+  optional<int> backtrace(string s, string target, int index) {
     for (int i = index; i >= 0; --i) {
       bool flag = false;
       for (char c = target[i] + 1; c <= 'z'; ++c) {
