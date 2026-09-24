@@ -39,6 +39,7 @@ while IFS= read -r f; do
     continue
   fi
   total=$((total + 1))
+  echo "-- Testing $n --"
   if ! scripts/switch.sh "$n" >/dev/null 2>&1; then
     build_fail+=("$n (switch failed)")
     echo "  [SWITCH FAIL] $n"
@@ -48,11 +49,13 @@ while IFS= read -r f; do
   if ! cmake --build build -j4 >"/tmp/test-all-build-${n}.log" 2>&1; then
     build_fail+=("$n")
     echo "  [BUILD FAIL] $n"
+    cat "/tmp/test-all-build-${n}.log"
     continue
   fi
   if ! ./build/LeetCode >"/tmp/test-all-run-${n}.log" 2>&1; then
     test_fail+=("$n")
     echo "  [TEST FAIL]  $n"
+    cat "/tmp/test-all-run-${n}.log"
   else
     ok=$((ok + 1))
   fi
@@ -72,6 +75,7 @@ while IFS= read -r qfile; do
   label="${rel#contests/}"
   logname="$(echo "$label" | tr '/ ' '__')"
   total=$((total + 1))
+  echo "-- Testing $label --"
   cat >"$root/main.cpp" <<EOF
 #include "runner.h"
 #include "${rel}"
@@ -85,11 +89,13 @@ EOF
   if ! cmake --build build -j4 >"/tmp/test-all-build-contest-${logname}.log" 2>&1; then
     build_fail+=("$label")
     echo "  [BUILD FAIL] $label"
+    cat "/tmp/test-all-build-contest-${logname}.log"
     continue
   fi
   if ! ./build/LeetCode >"/tmp/test-all-run-contest-${logname}.log" 2>&1; then
     test_fail+=("$label")
     echo "  [TEST FAIL]  $label"
+    cat "/tmp/test-all-run-contest-${logname}.log"
   else
     ok=$((ok + 1))
   fi
