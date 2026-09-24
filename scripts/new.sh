@@ -137,7 +137,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}(vector<int>& nums) {
+  vector<int> ${method}([[maybe_unused]] vector<int>& nums) {
     // TODO: implement
     abort();
   }
@@ -161,14 +161,16 @@ EOF
 
 vec-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(vector<int>& nums) {
+  int ${method}([[maybe_unused]] vector<int>& nums) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -197,7 +199,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}(vector<int>& nums, int x) {
+  vector<int> ${method}([[maybe_unused]] vector<int>& nums, [[maybe_unused]] int x) {
     // TODO: implement
     abort();
   }
@@ -226,14 +228,16 @@ EOF
 
 vec-int-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(vector<int>& nums, int x) {
+  int ${method}([[maybe_unused]] vector<int>& nums, [[maybe_unused]] int x) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -267,7 +271,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}(vector<vector<int>>& matrix) {
+  vector<int> ${method}([[maybe_unused]] vector<vector<int>>& matrix) {
     // TODO: implement
     abort();
   }
@@ -291,12 +295,15 @@ EOF
 
 scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
+
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(int n) {
+  int ${method}([[maybe_unused]] int n) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -322,12 +329,15 @@ EOF
 
 two-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
+
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(int a, int b) {
+  int ${method}([[maybe_unused]] int a, [[maybe_unused]] int b) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -360,7 +370,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}(int n) {
+  vector<int> ${method}([[maybe_unused]] int n) {
     // TODO: implement
     abort();
   }
@@ -395,7 +405,7 @@ using namespace std;
 
 class Solution {
  public:
-  vector<vector<int>> ${method}(int n) {
+  vector<vector<int>> ${method}([[maybe_unused]] int n) {
     // TODO: implement
     abort();
   }
@@ -423,12 +433,15 @@ EOF
 
 scalar-bool)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
+
 using namespace std;
 
 class Solution {
  public:
-  bool ${method}(int n) {
+  bool ${method}([[maybe_unused]] int n) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -454,14 +467,16 @@ EOF
 
 scalar-vec-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(int n, vector<int>& nums) {
+  int ${method}([[maybe_unused]] int n, [[maybe_unused]] vector<int>& nums) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -488,14 +503,16 @@ EOF
 
 matrix-vec-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(vector<vector<int>>& grid, vector<int>& nums) {
+  int ${method}([[maybe_unused]] vector<vector<int>>& grid, [[maybe_unused]] vector<int>& nums) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -528,7 +545,7 @@ using namespace std;
 
 class Solution {
  public:
-  string ${method}(string s, long long t) {
+  string ${method}([[maybe_unused]] string s, [[maybe_unused]] long long t) {
     // TODO: implement
     abort();
   }
@@ -557,14 +574,16 @@ EOF
 
 str-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <string>
 
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(string s) {
+  int ${method}([[maybe_unused]] string s) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -586,14 +605,16 @@ EOF
 
 two-str-scalar)
     cat > "$solution_file" <<EOF
+#include <cstdlib>
 #include <string>
 
 using namespace std;
 
 class Solution {
  public:
-  int ${method}(string a, string b) {
+  int ${method}([[maybe_unused]] string a, [[maybe_unused]] string b) {
     // TODO: implement
+    abort();
   }
 };
 EOF
@@ -627,7 +648,8 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> ${method}(string s, string queryCharacters, vector<int>& queryIndices) {
+  vector<int> ${method}([[maybe_unused]] string s, [[maybe_unused]] string queryCharacters,
+                         [[maybe_unused]] vector<int>& queryIndices) {
     // TODO: implement
     abort();
   }

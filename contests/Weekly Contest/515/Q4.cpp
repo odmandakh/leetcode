@@ -2,7 +2,6 @@
 #include <tuple>
 #include <vector>
 
-
 using namespace std;
 
 // ASSISTED: asked for the solution directly instead of solving independently
@@ -37,4 +36,3 @@ class Solution {
     return ans;
   }
 };
-

@@ -2,7 +2,6 @@
 #include <tuple>
 #include <vector>
 
-
 using namespace std;
 
 // ASSISTED: asked for bug/output fixes on an algorithm the user wrote
@@ -41,4 +40,3 @@ class Solution {
     return ans;
   }
 };
-

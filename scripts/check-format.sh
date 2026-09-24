@@ -24,21 +24,22 @@ if ! git rev-parse --verify "$base" >/dev/null 2>&1; then
   exit 0
 fi
 
-mapfile -t files < <(git diff --name-only --diff-filter=ACMR "$base"...HEAD -- '*.cpp' '*.h' 2>/dev/null)
-
-if [ "${#files[@]}" -eq 0 ]; then
-  echo "No changed C++ files to check."
-  exit 0
-fi
-
+found=0
 fail=0
-for f in "${files[@]}"; do
+while IFS= read -r f; do
+  [ -n "$f" ] || continue
+  found=1
   [ -f "$f" ] || continue
   if ! clang-format --dry-run --Werror -style=file "$f"; then
     echo "  [FORMAT FAIL] $f"
     fail=1
   fi
-done
+done < <(git diff --name-only --diff-filter=ACMR "$base"...HEAD -- '*.cpp' '*.h' 2>/dev/null)
+
+if [ "$found" -eq 0 ]; then
+  echo "No changed C++ files to check."
+  exit 0
+fi
 
 if [ "$fail" -ne 0 ]; then
   echo

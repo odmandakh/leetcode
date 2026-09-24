@@ -41,8 +41,8 @@ cat > "$root/main.cpp" <<EOF
 #include "${rel}"
 
 int main() {
-    run();
-    return TestStatus::allPassed ? 0 : 1;
+  run();
+  return TestStatus::allPassed ? 0 : 1;
 }
 EOF
 

@@ -2,7 +2,6 @@
 #include <unordered_map>
 #include <vector>
 
-
 using namespace std;
 
 // ASSISTED: fixed factorization edge cases and wired the sliding-window
@@ -43,4 +42,3 @@ class Solution {
     return ans;
   }
 };
-
