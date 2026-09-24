@@ -10,7 +10,7 @@ class Solution {
     long long sum = nums[0];
     int i = 1;
 
-    while (i < nums.size()) {
+    while (i < (int)nums.size()) {
       if (nums[i - 1] + 1 == nums[i]) {
         sum += nums[i];
       } else {
@@ -29,7 +29,7 @@ class Solution {
 
     sort(nums.begin(), nums.end());
 
-    for (int i = 0; i < nums.size(); i++) {
+    for (int i = 0; i < (int)nums.size(); i++) {
       if (lowestMissing == nums[i]) {
         lowestMissing++;
       }

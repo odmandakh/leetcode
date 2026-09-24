@@ -11,7 +11,7 @@ class Solution {
     sort(nums1.begin(), nums1.end());
 
     int isOdd = nums1[0] % 2;
-    for (int i = 1; i < nums1.size(); ++i) {
+    for (int i = 1; i < (int)nums1.size(); ++i) {
       if (isOdd != nums1[i] % 2) {
         bool found = false;
         for (int j = 0; j < i; ++j) {

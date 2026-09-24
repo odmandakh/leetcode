@@ -24,7 +24,7 @@ class Solution {
     int distinctCount = 0;
     unordered_map<int, int> freq;
     int ans = 0;
-    for (int right = 0; right < nums.size(); ++right) {
+    for (int right = 0; right < (int)nums.size(); ++right) {
       for (int prime : distP[right]) {
         if (freq[prime]++ == 0) distinctCount++;
       }

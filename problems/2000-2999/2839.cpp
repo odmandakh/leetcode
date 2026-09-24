@@ -12,7 +12,7 @@ class Solution {
     vector<vector<int>> charFrequency(2, vector<int>(26, 0));
 
     // Process each character in both strings
-    for (int i = 0; i < s1.size(); ++i) {
+    for (int i = 0; i < (int)s1.size(); ++i) {
       int positionParity = i & 1;  // 0 for even indices, 1 for odd indices
 
       // Increment count for character from s1 at this position parity

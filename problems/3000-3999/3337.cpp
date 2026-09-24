@@ -31,7 +31,7 @@ class Solution {
 
   vector<vector<int>> getTransformationMatrix(const vector<int>& nums) {
     vector<vector<int>> T(26, vector<int>(26));
-    for (int i = 0; i < nums.size(); ++i)
+    for (int i = 0; i < (int)nums.size(); ++i)
       for (int step = 1; step <= nums[i]; ++step) ++T[i][(i + step) % 26];
     return T;
   }

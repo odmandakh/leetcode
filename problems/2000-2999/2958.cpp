@@ -9,7 +9,7 @@ class Solution {
   int maxSubarrayLength(vector<int>& nums, int k) {
     unordered_map<int, int> freq;
     int ans = 0, start = 0;
-    for (int i = 0; i < nums.size(); ++i) {
+    for (int i = 0; i < (int)nums.size(); ++i) {
       freq[nums[i]]++;
       if (freq[nums[i]] > k) {
         while (start < i) {

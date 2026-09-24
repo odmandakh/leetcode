@@ -8,7 +8,7 @@ using namespace std;
 // ASSISTED: asked for the solution directly instead of solving independently
 class Solution {
  public:
-  long long elevatorRequests(int n, int start, vector<vector<int>>& requests) {
+  long long elevatorRequests([[maybe_unused]] int n, int start, vector<vector<int>>& requests) {
     int m = requests.size();
     auto diff = [](long long a, long long b) { return a > b ? a - b : b - a; };
 

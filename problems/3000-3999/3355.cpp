@@ -13,7 +13,7 @@ class Solution {
     }
 
     int decremant = 0;
-    for (int i = 0; i < nums.size(); ++i) {
+    for (int i = 0; i < (int)nums.size(); ++i) {
       decremant += line[i];
       if (decremant < nums[i]) return false;
     }

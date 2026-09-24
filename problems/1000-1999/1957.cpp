@@ -12,7 +12,7 @@ class Solution {
     result.push_back(s[0]);  // Add first character
     int count = 1;           // Count of consecutive identical characters
 
-    for (int i = 1; i < s.length(); i++) {
+    for (int i = 1; i < (int)s.length(); i++) {
       if (s[i] == result.back()) {
         // Current character matches the last added character
         if (count < 2) {

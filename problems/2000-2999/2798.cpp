@@ -7,7 +7,7 @@ class Solution {
   int numberOfEmployeesWhoMetTarget(vector<int>& hours, int target) {
     int ans = 0;
 
-    for (int i = 0; i < hours.size(); ++i) {
+    for (int i = 0; i < (int)hours.size(); ++i) {
       if (hours[i] >= target) ans++;
     }
 

@@ -6,7 +6,7 @@ class Solution {
  public:
   int balancedStringSplit(string s) {
     int i = 0, countR = 0, countL = 0, ans = 0;
-    while (i < s.size()) {
+    while (i < (int)s.size()) {
       if (s[i] == 'R') {
         countR++;
       } else {

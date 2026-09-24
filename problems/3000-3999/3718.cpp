@@ -9,7 +9,7 @@ class Solution {
     sort(nums.begin(), nums.end());
 
     int ans = k;
-    for (int i = 0; i < nums.size(); ++i) {
+    for (int i = 0; i < (int)nums.size(); ++i) {
       if (nums[i] > ans) break;
       if (nums[i] == ans) ans += k;
     }

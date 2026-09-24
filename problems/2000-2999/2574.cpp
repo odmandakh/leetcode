@@ -13,7 +13,7 @@ class Solution {
     for (int num : nums) {
       rightSum += num;
     }
-    for (int i = 0; i < nums.size(); i++) {
+    for (int i = 0; i < (int)nums.size(); i++) {
       rightSum -= nums[i];
       answer[i] = abs(leftSum - rightSum);
       leftSum += nums[i];

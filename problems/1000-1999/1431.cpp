@@ -9,11 +9,11 @@ class Solution {
     vector<bool> ans;
     int max = 0;
 
-    for (int i = 0; i < candies.size(); ++i) {
+    for (int i = 0; i < (int)candies.size(); ++i) {
       max = candies[i] > max ? candies[i] : max;
     }
 
-    for (int i = 0; i < candies.size(); ++i) {
+    for (int i = 0; i < (int)candies.size(); ++i) {
       if (max > candies[i] + extraCandies) {
         ans.push_back(false);
       } else {

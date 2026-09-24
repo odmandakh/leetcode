@@ -12,7 +12,7 @@ class Solution {
     vector<vector<int>> charCount(2, vector<int>(26, 0));
 
     // Iterate through both strings simultaneously
-    for (int i = 0; i < s1.size(); ++i) {
+    for (int i = 0; i < (int)s1.size(); ++i) {
       // Determine if current position is even (0) or odd (1)
       int parityIndex = i & 1;  // Bitwise AND with 1 gives 0 for even, 1 for odd
 

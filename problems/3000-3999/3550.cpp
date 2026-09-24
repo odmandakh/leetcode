@@ -5,7 +5,7 @@ using namespace std;
 class Solution {
  public:
   int smallestIndex(vector<int>& nums) {
-    for (int i = 0; i < nums.size(); ++i) {
+    for (int i = 0; i < (int)nums.size(); ++i) {
       int tmp = nums[i];
       int sumOfDig = 0;
       while (tmp) {

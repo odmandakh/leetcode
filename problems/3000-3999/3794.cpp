@@ -11,7 +11,7 @@ class Solution {
       ans[i] = s[k - i - 1];
     }
 
-    for (int i = k; i < s.length(); ++i) {
+    for (int i = k; i < (int)s.length(); ++i) {
       ans[i] = s[i];
     }
 

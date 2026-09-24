@@ -10,7 +10,7 @@ class Solution {
     vector<string> ans;
     int groupId = -1;
 
-    for (int i = 0; i < groups.size(); ++i)
+    for (int i = 0; i < (int)groups.size(); ++i)
       if (groups[i] != groupId) {
         groupId = groups[i];
         ans.push_back(words[i]);

@@ -6,7 +6,7 @@ class Solution {
  public:
   bool isValid(string s) {
     string stack = "";
-    for (int i = 0; i < s.length(); i++) {
+    for (int i = 0; i < (int)s.length(); i++) {
       if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
         stack += s[i];
       } else {

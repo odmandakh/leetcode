@@ -9,7 +9,7 @@ class Solution {
     string newString = "";
     char last;
     int cnt = 0;
-    for (int i = 0; i < s.length(); ++i) {
+    for (int i = 0; i < (int)s.length(); ++i) {
       if (cnt == 0) {
         last = s[i];
         cnt++;

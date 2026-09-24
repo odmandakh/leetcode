@@ -21,7 +21,7 @@ class Solution {
     int sub[2001] = {0};
     int windowUnique = 0;
 
-    for (int right = 0; right < nums.size(); ++right) {
+    for (int right = 0; right < (int)nums.size(); ++right) {
       // Add nums[right] to the window
       if (sub[nums[right]] == 0) windowUnique++;
       sub[nums[right]]++;

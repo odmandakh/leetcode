@@ -42,7 +42,7 @@ class Solution {
  private:
   // Returns true if the substring of ans starting at `i` matches `s`.
   bool match(string& ans, int i, string& s) {
-    for (int j = 0; j < s.length(); ++j)
+    for (int j = 0; j < (int)s.length(); ++j)
       if (ans[i + j] != s[j]) return false;
     return true;
   }

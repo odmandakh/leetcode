@@ -16,14 +16,14 @@ class Solution {
         if (sum > rem) {
           long long diff = sum - rem;
           if (mpp.find(diff) != mpp.end()) {
-            int r = mpp[diff].first, c = mpp[diff].second;
+            int c = mpp[diff].second;
             if (c == 0 || c == i) return true;
           }
         }
         if (rem > sum) {
           long long diff = rem - sum;
           if (mpp.find(diff) != mpp.end()) {
-            int r = mpp[diff].first, c = mpp[diff].second;
+            int c = mpp[diff].second;
             if (c == i + 1 || c == m - 1) return true;
           }
         }
@@ -38,14 +38,14 @@ class Solution {
         if (sum > rem) {
           long long diff = sum - rem;
           if (mpp.find(diff) != mpp.end()) {
-            int r = mpp[diff].first, c = mpp[diff].second;
+            int r = mpp[diff].first;
             if (r == 0 || r == i) return true;
           }
         }
         if (rem > sum) {
           long long diff = rem - sum;
           if (mpp.find(diff) != mpp.end()) {
-            int r = mpp[diff].first, c = mpp[diff].second;
+            int r = mpp[diff].first;
             if (r == i + 1 || r == n - 1) return true;
           }
         }

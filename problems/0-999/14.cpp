@@ -10,7 +10,7 @@ class Solution {
 
     for (string str : strs) {
       int i = 0;
-      while (i < ans.size() && i < str.size() && ans[i] == str[i]) {
+      while (i < (int)ans.size() && i < (int)str.size() && ans[i] == str[i]) {
         i++;
       }
       ans = ans.substr(0, i);

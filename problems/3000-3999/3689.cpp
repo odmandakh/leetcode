@@ -12,7 +12,7 @@ class Solution {
     long long max = nums[0];
     long long min = nums[0];
 
-    for (int i = 1; i < nums.size(); i++) {
+    for (int i = 1; i < (int)nums.size(); i++) {
       if (nums[i] > max) max = nums[i];
       if (nums[i] < min) min = nums[i];
     }

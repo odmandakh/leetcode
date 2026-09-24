@@ -28,12 +28,12 @@ class Solution {
   int romanToInt(string s) {
     int ans = 0, s1, s2;
 
-    for (int i = 0; i < s.length(); i++) {
+    for (int i = 0; i < (int)s.length(); i++) {
       s1 = value(s[i]);
 
       if (s1 == -1) return -1;
 
-      if (i + 1 < s.length()) {
+      if (i + 1 < (int)s.length()) {
         s2 = value(s[i + 1]);
 
         if (s2 == -1) {

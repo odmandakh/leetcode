@@ -9,7 +9,7 @@ class Solution {
     sort(nums.begin(), nums.end());
 
     int index = 0;
-    while (index < nums.size()) {
+    while (index < (int)nums.size()) {
       if (nums[index] >= lower) break;
       index++;
     }
@@ -17,7 +17,7 @@ class Solution {
     vector<vector<int>> ans;
     int i = lower;
 
-    if (index == nums.size()) {
+    if (index == (int)nums.size()) {
       if (i <= upper) ans.push_back({i, upper});
       return ans;
     }
@@ -29,8 +29,8 @@ class Solution {
       if (i > start) ans.push_back({start, i - 1});
 
       i++;
-      while (index < nums.size() && nums[index] < i) index++;
-      if (index == nums.size()) break;
+      while (index < (int)nums.size() && nums[index] < i) index++;
+      if (index == (int)nums.size()) break;
     }
 
     if (i <= upper) ans.push_back({i, upper});

@@ -1,6 +1,8 @@
 #include "runner.h"
 #include "problems/3000-3999/3871.cpp"
 
+using namespace std;
+
 inline void run() {
   runTests(
       string(PROJECT_ROOT) + "/tests/3000-3999/3871",

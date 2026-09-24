@@ -4,5 +4,5 @@ using namespace std;
 
 class Solution {
  public:
-  bool uniformArray(vector<int>& nums1) { return true; }
+  bool uniformArray([[maybe_unused]] vector<int>& nums1) { return true; }
 };

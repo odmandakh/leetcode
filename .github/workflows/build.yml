@@ -5,16 +5,49 @@ on:
   pull_request:
 
 jobs:
-  build:
+  conflict-check:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for unresolved merge-conflict markers
+        run: scripts/check-conflicts.sh
+
+  test-all:
+    runs-on: ubuntu-latest
+    needs: conflict-check
     steps:
       - uses: actions/checkout@v4
 
       - name: Configure
         run: cmake -S . -B build
 
-      - name: Build
-        run: cmake --build build -j4
+      # Builds every solved problem/contest question with -Wall -Wextra
+      # -Wpedantic -Werror (compiler-level correctness checks, from
+      # CMakeLists.txt) and runs each one's own tests, catching regressions
+      # in shared files (runner.h, CMakeLists.txt, scripts/*.sh templates)
+      # that a single "build the active problem" check would miss.
+      - name: Build + run every problem's and contest question's own tests
+        run: scripts/test-all.sh
 
-      - name: Run active problem's tests
-        run: ./build/LeetCode
+  coding-standards:
+    runs-on: ubuntu-latest
+    needs: conflict-check
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+
+      # Only checks files changed in this push/PR -- new/touched code gets
+      # checked, already-solved problems aren't retroactively flagged just
+      # for predating this check.
+      - name: Check clang-format compliance (changed files only)
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            scripts/check-format.sh "${{ github.event.pull_request.base.sha }}"
+          else
+            scripts/check-format.sh "${{ github.event.before }}"
+          fi

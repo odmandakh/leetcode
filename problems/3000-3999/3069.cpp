@@ -10,7 +10,7 @@ class Solution {
 
     arr1.push_back(nums[0]);
     arr2.push_back(nums[1]);
-    for (int i = 2; i < nums.size(); i++) {
+    for (int i = 2; i < (int)nums.size(); i++) {
       if (arr1.back() > arr2.back()) {
         arr1.push_back(nums[i]);
       } else {

@@ -7,7 +7,7 @@ class Solution {
   int longestPalindrome(string s) {
     int A[53] = {0};
 
-    for (int i = 0; i < s.size(); ++i) {
+    for (int i = 0; i < (int)s.size(); ++i) {
       if (s[i] >= 97) {
         A[s[i] - 70]++;
       } else {

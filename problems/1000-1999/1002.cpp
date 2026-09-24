@@ -11,17 +11,17 @@ class Solution {
     words.erase(words.begin());
 
     int i = 0;
-    while (i < ans.size()) {
+    while (i < (int)ans.size()) {
       int j = 0;
-      while (j < words.size()) {
+      while (j < (int)words.size()) {
         int k = 0;
-        for (; k < words[j].size(); ++k) {
+        for (; k < (int)words[j].size(); ++k) {
           if (words[j][k] == ans[i]) {
             break;
           }
         }
 
-        if (k != words[j].size())
+        if (k != (int)words[j].size())
           words[j].erase(k, 1);
         else
           break;
@@ -29,7 +29,7 @@ class Solution {
         j++;
       }
 
-      if (j == words.size())
+      if (j == (int)words.size())
         i++;
       else
         ans.erase(ans.begin() + i);

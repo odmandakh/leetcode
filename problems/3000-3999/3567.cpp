@@ -20,7 +20,7 @@ class Solution {
         }
         ranges::sort(nums);
         int d = INT_MAX;
-        for (int t = 1; t < nums.size(); ++t) {
+        for (int t = 1; t < (int)nums.size(); ++t) {
           if (nums[t] != nums[t - 1]) {
             d = min(d, abs(nums[t] - nums[t - 1]));
           }

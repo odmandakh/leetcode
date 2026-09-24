@@ -8,7 +8,7 @@ class Solution {
     string ans;
 
     int i = 0;
-    while (i < command.length()) {
+    while (i < (int)command.length()) {
       if (command[i] == 'G') {
         ans.push_back('G');
         i++;
