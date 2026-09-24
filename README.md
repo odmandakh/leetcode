@@ -126,17 +126,3 @@ All three are **required** for the Daily Loop below, but none of them live in th
 If you end up asking for the solution outright instead of solving it independently, mark the file honestly — add `// ASSISTED: <short reason>` right above `class Solution`. It's grep-able later: `grep -rl ASSISTED problems/` lists every problem that needs a solo re-attempt.
 
 **If an AI assistant writes or provides the solution logic itself** (not just reviewing/critiquing code you wrote), it must add the `// ASSISTED: <short reason>` tag above `class Solution` in the same turn it writes the code — don't wait to be asked. This applies to `problems/*.cpp` and `contests/*/Qn.cpp` alike.
-
-## Practice Log Template
-Copy this block per problem:
-
-```markdown
-### YYYY-MM-DD - <Problem Name>
-- Difficulty: Easy | Medium | Hard
-- Time Spent: <minutes>
-- Pattern: <two pointers / stack / DP / ...>
-- Mistake I Made: <what went wrong>
-- Key Invariant: <why this works>
-- Complexity: O(?) time, O(?) space
-- Next Drill: <related problem to reinforce>
-```

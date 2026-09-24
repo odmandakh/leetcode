@@ -243,6 +243,13 @@ inline std::vector<std::vector<int>> int2DVecBracketed(std::istream& in) {
 }
 }  // namespace Parse
 
+// Lets main() report a non-zero exit code when any case failed/was skipped,
+// without changing every run.cpp's `void run()` signature -- checked once,
+// after run() returns, in main.cpp's `return TestStatus::allPassed ? 0 : 1;`.
+namespace TestStatus {
+inline bool allPassed = true;
+}
+
 // ─── Generic test runner ──────────────────────────────────────────────────────
 // parseInput    (std::istream&) -> InputT
 // parseExpected (std::istream&) -> OutputT
@@ -296,4 +303,6 @@ inline void runTests(const std::string& testDir, const std::string& title, Parse
   std::cout << "Result: " << passed << "/" << (passed + failed) << " passed";
   if (skipped > 0) std::cout << " (" << skipped << " skipped)";
   std::cout << " -- total " << totalMs << " ms\n\n";
+
+  if (failed > 0 || skipped > 0) TestStatus::allPassed = false;
 }

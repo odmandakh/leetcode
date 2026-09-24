@@ -42,7 +42,7 @@ cat > "$root/main.cpp" <<EOF
 
 int main() {
     run();
-    return 0;
+    return TestStatus::allPassed ? 0 : 1;
 }
 EOF
 

@@ -14,3 +14,5 @@ add_executable(LeetCode main.cpp)
 
 # So `#include "runner.h"` resolves from problems/*.cpp too, not just main.cpp
 target_include_directories(LeetCode PRIVATE ${CMAKE_SOURCE_DIR})
+
+target_compile_options(LeetCode PRIVATE -Wall -Wextra -Wpedantic)

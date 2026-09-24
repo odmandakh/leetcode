@@ -217,7 +217,7 @@ inline void run() {
         in >> x;
         return {nums, x};
       },
-      Parse::intVec,  // output: space-separated ints
+      Parse::intVecBracketed,  // output: [1,2,3,...]
       [](auto p) { return Solution().${method}(p.first, p.second); }
   );
 }

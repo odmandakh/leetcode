@@ -10,6 +10,6 @@
 #include "tests/3000-3999/3550/run.cpp"
 
 int main() {
-    run();
-    return 0;
+  run();
+  return TestStatus::allPassed ? 0 : 1;
 }
