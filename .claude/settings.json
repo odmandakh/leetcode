@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_response.filePath // .tool_input.file_path'); case \"$f\" in *.cpp|*.h) command -v clang-format >/dev/null && clang-format -i -style=file \"$f\";; esac; true",
+            "statusMessage": "clang-format"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -72,5 +72,3 @@ compile_commands.json
 # .claude/ ever reappears here (e.g. a future per-repo override), ignore it
 # wholesale rather than carving out a subpath.
 .agents/
-
-.claude/

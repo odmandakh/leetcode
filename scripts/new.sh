@@ -688,5 +688,10 @@ EOF
     ;;
 esac
 
+# Keep scaffolded files clang-format-clean (CI's coding-standards job checks them).
+if command -v clang-format >/dev/null 2>&1; then
+    clang-format -i -style=file "$solution_file" "$harness_file"
+fi
+
 echo "Created problems/${bucket}/${n}.cpp and tests/${bucket}/${n}/ (${tests_count} empty .in/.out pair(s) + run.cpp harness)"
 "$root/scripts/switch.sh" "$n"

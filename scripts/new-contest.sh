@@ -79,6 +79,10 @@ inline void run() {
   );
 }
 EOF
+    # Keep scaffolded files clang-format-clean (CI's coding-standards job checks them).
+    if command -v clang-format >/dev/null 2>&1; then
+        clang-format -i -style=file "$contestDir/Q${i}.cpp" "$contestDir/tests/Q${i}/run.cpp"
+    fi
 done
 
 echo "Created contests/${contest}/ with Q1..Q${numQ}.cpp and tests/Q1..Q${numQ}/ (${numTests} empty .in/.out pair(s) each)"
